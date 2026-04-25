@@ -1,0 +1,69 @@
+name: Autopilot — Update Model Data
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
+  workflow_dispatch:       # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install anthropic pyyaml requests
+
+      - name: Run model update check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/update_models.py
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet models-data.yml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR if data changed
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="autopilot/model-update-$(date +%Y%m%d-%H%M)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add models-data.yml
+          git commit -m "chore: autopilot model data update $(date +%Y-%m-%d)"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "Autopilot: model data update $(date +%Y-%m-%d)" \
+            --body "$(cat <<'EOF'
+## Autopilot Model Update
+
+This PR was generated automatically by the weekly model-update workflow.
+
+Claude reviewed publicly available provider documentation and identified potential changes to pricing, context windows, or new models.
+
+**Please review the diff carefully before merging** — Claude may have made mistakes.
+
+### Checklist
+- [ ] Pricing changes are accurate
+- [ ] New models are real and correctly described
+- [ ] No existing models were accidentally removed
+- [ ] All required YAML fields are present
+EOF
+)" \
+            --label "autopilot" || true

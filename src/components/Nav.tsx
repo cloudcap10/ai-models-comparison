@@ -39,7 +39,7 @@ export default function Nav() {
             About
           </Link>
           <a
-            href="https://github.com/cloudcap10/ai-models-comparison"
+            href="https://github.com/cloudcap10/pickmodel"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm transition-colors"

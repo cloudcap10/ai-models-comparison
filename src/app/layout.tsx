@@ -100,7 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p className="mt-2">
             MIT License ·{' '}
             <a
-              href="https://github.com/cloudcap10/ai-models-comparison"
+              href="https://github.com/cloudcap10/pickmodel"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: 'var(--accent)' }}

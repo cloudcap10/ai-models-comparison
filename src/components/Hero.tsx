@@ -114,7 +114,7 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
             Explore Models
           </a>
           <a
-            href="https://github.com/cloudcap10/ai-models-comparison"
+            href="https://github.com/cloudcap10/pickmodel"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"
