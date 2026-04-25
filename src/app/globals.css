@@ -2,14 +2,14 @@
 
 :root {
   --bg: #0d0d0f;
-  --bg-card: #16161a;
-  --bg-card-hover: #1e1e24;
-  --bg-surface: #1a1a20;
-  --border: #2a2a35;
-  --border-subtle: #1e1e28;
-  --text: #e8e8f0;
-  --text-muted: #8888aa;
-  --text-faint: #55556a;
+  --bg-card: #13131a;
+  --bg-card-hover: #1a1a24;
+  --bg-surface: #1a1a22;
+  --border: #2e2e3e;
+  --border-subtle: #232332;
+  --text: #eeeef5;
+  --text-muted: #8a8aaa;
+  --text-faint: #55556e;
   --accent: #7c6aff;
   --accent-dim: #4a3faa;
   --accent-glow: rgba(124, 106, 255, 0.15);
@@ -65,7 +65,7 @@ body {
 }
 
 .comparison-table tbody tr:hover td {
-  background-color: var(--bg-card-hover);
+  background-color: var(--bg-card-hover) !important;
 }
 
 /* Gradient text */
@@ -78,7 +78,8 @@ body {
 
 /* Card glow on hover */
 .card-glow:hover {
-  box-shadow: 0 0 0 1px var(--accent-dim), 0 8px 32px rgba(124, 106, 255, 0.12);
+  border-color: var(--accent-dim) !important;
+  box-shadow: 0 0 0 1px rgba(124, 106, 255, 0.3), 0 8px 32px rgba(124, 106, 255, 0.1);
 }
 
 /* Pill badge */

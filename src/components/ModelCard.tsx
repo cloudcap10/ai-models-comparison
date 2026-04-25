@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLink, Zap, Eye, Cpu, DollarSign } from 'lucide-react';
+import { Eye, Zap, Code2, ArrowRight } from 'lucide-react';
 import type { AIModel } from '@/types/model';
 import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
 
@@ -13,47 +13,21 @@ interface ModelCardProps {
 }
 
 const TIER_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  frontier: { bg: 'rgba(124,106,255,0.15)', text: '#a78bfa', label: 'Frontier' },
-  standard: { bg: 'rgba(99,179,237,0.15)', text: '#63b3ed', label: 'Standard' },
-  lite: { bg: 'rgba(52,211,153,0.15)', text: '#34d399', label: 'Lite' },
+  frontier: { bg: 'rgba(167,139,250,0.12)', text: '#a78bfa', label: 'Frontier' },
+  standard: { bg: 'rgba(99,179,237,0.12)', text: '#63b3ed', label: 'Standard' },
+  lite: { bg: 'rgba(52,211,153,0.12)', text: '#34d399', label: 'Lite' },
 };
 
-function StarRating({ value }: { value: number }) {
+function DotBar({ value, color = 'var(--accent)' }: { value: number; color?: string }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((i) => (
         <div
           key={i}
-          className="w-2 h-2 rounded-full"
-          style={{
-            background: i <= value ? 'var(--accent)' : 'var(--border)',
-          }}
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ background: i <= value ? color : 'var(--border)' }}
         />
       ))}
-    </div>
-  );
-}
-
-function FeaturePill({
-  active,
-  label,
-  icon,
-}: {
-  active: boolean;
-  label: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <div
-      className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium"
-      style={{
-        background: active ? 'rgba(52,211,153,0.1)' : 'var(--bg-surface)',
-        color: active ? '#34d399' : 'var(--text-faint)',
-        border: `1px solid ${active ? 'rgba(52,211,153,0.2)' : 'var(--border-subtle)'}`,
-      }}
-    >
-      {icon}
-      {label}
     </div>
   );
 }
@@ -65,153 +39,173 @@ export default function ModelCard({ model, index }: ModelCardProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: index * 0.04 }}
+      transition={{ duration: 0.3, delay: index * 0.03 }}
+      className="h-full"
     >
       <Link href={`/model/${model.id}`} className="block h-full">
         <div
-          className="card-glow h-full rounded-2xl p-5 transition-all duration-200 cursor-pointer"
+          className="card-glow h-full rounded-2xl flex flex-col transition-all duration-200 cursor-pointer overflow-hidden"
           style={{
             background: 'var(--bg-card)',
-            border: '1px solid var(--border-subtle)',
+            border: '1px solid var(--border)',
           }}
         >
           {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)' }}
+          <div className="p-5 pb-4">
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)' }}
+                >
+                  <Image
+                    src={model.icon}
+                    alt={model.provider}
+                    width={22}
+                    height={22}
+                    style={{ filter: 'brightness(1.2)' }}
+                    unoptimized
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h3
+                    className="font-bold text-sm leading-tight truncate"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {model.name}
+                  </h3>
+                  <p className="text-xs mt-0.5" style={{ color: providerColor }}>
+                    {model.provider}
+                  </p>
+                </div>
+              </div>
+              <span
+                className="pill flex-shrink-0"
+                style={{ background: tierStyle.bg, color: tierStyle.text }}
               >
-                <Image
-                  src={model.icon}
-                  alt={model.provider}
-                  width={22}
-                  height={22}
-                  style={{ filter: 'brightness(1.2)' }}
-                  unoptimized
-                />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm leading-tight" style={{ color: 'var(--text)' }}>
-                  {model.name}
-                </h3>
-                <p className="text-xs mt-0.5" style={{ color: providerColor, opacity: 0.9 }}>
-                  {model.provider}
-                </p>
-              </div>
+                {tierStyle.label}
+              </span>
             </div>
-            <span
-              className="pill flex-shrink-0"
-              style={{ background: tierStyle.bg, color: tierStyle.text }}
+
+            <p
+              className="text-xs leading-relaxed line-clamp-2"
+              style={{ color: 'var(--text-muted)' }}
             >
-              {tierStyle.label}
-            </span>
+              {model.description}
+            </p>
           </div>
 
-          {/* Description */}
-          <p
-            className="text-xs leading-relaxed mb-4 line-clamp-2"
-            style={{ color: 'var(--text-muted)' }}
+          {/* Stats — 3 equal boxes */}
+          <div
+            className="grid grid-cols-3 divide-x mx-5 mb-4 rounded-xl overflow-hidden"
+            style={{
+              border: '1px solid var(--border)',
+              ['--divide-color' as string]: 'var(--border)',
+            }}
           >
-            {model.description}
-          </p>
-
-          {/* Key metrics */}
-          <div className="grid grid-cols-2 gap-2 mb-4">
-            <div
-              className="rounded-lg p-2.5"
-              style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)' }}
-            >
-              <div className="flex items-center gap-1.5 mb-1">
-                <Cpu size={11} style={{ color: 'var(--text-faint)' }} />
-                <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                  Context
-                </span>
+            <div className="p-3 text-center" style={{ background: 'var(--bg-surface)' }}>
+              <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>
+                Context
               </div>
-              <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+              <div className="text-sm font-bold" style={{ color: 'var(--blue)' }}>
                 {formatContextWindow(model.contextWindow)}
               </div>
             </div>
-            <div
-              className="rounded-lg p-2.5"
-              style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-subtle)' }}
-            >
-              <div className="flex items-center gap-1.5 mb-1">
-                <DollarSign size={11} style={{ color: 'var(--text-faint)' }} />
-                <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                  {consumerPlan ? 'Monthly plan' : 'Input / 1M'}
-                </span>
+            <div className="p-3 text-center" style={{ background: 'var(--bg-surface)' }}>
+              <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>
+                API /1M
+              </div>
+              <div className="text-sm font-bold" style={{ color: 'var(--green)' }}>
+                {formatPrice(model.inputPricePer1M)}
+              </div>
+            </div>
+            <div className="p-3 text-center" style={{ background: 'var(--bg-surface)' }}>
+              <div className="text-xs mb-1" style={{ color: 'var(--text-faint)' }}>
+                Monthly
               </div>
               <div
-                className="text-sm font-semibold"
-                style={{ color: consumerPlan ? (consumerPlan.badge === 'Free' ? '#34d399' : '#a78bfa') : 'var(--text)' }}
+                className="text-sm font-bold"
+                style={{
+                  color: consumerPlan
+                    ? consumerPlan.badge === 'Free'
+                      ? '#34d399'
+                      : '#a78bfa'
+                    : 'var(--text-faint)',
+                }}
               >
-                {consumerPlan ? consumerPlan.badge : formatPrice(model.inputPricePer1M)}
+                {consumerPlan ? consumerPlan.badge : '—'}
               </div>
             </div>
           </div>
 
           {/* Capabilities */}
-          <div className="space-y-2 mb-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                Reasoning
-              </span>
-              <StarRating value={model.reasoningCapability} />
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                Code
-              </span>
-              <StarRating value={model.codeCapability} />
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                Speed
-              </span>
-              <StarRating value={model.speedRating} />
-            </div>
+          <div className="px-5 mb-4 space-y-2.5">
+            {[
+              { label: 'Code', value: model.codeCapability, icon: <Code2 size={11} /> },
+              { label: 'Reasoning', value: model.reasoningCapability, icon: <Zap size={11} /> },
+              { label: 'Speed', value: model.speedRating, icon: <ArrowRight size={11} /> },
+            ].map((cap) => (
+              <div key={cap.label} className="flex items-center justify-between">
+                <div
+                  className="flex items-center gap-1.5 text-xs w-20"
+                  style={{ color: 'var(--text-faint)' }}
+                >
+                  {cap.icon}
+                  {cap.label}
+                </div>
+                <DotBar value={cap.value} />
+              </div>
+            ))}
           </div>
 
-          {/* Feature pills */}
-          <div className="flex flex-wrap gap-1.5">
-            <FeaturePill active={model.openSource} label="Open Source" icon={<span>⟡</span>} />
-            <FeaturePill active={model.vision} label="Vision" icon={<Eye size={10} />} />
-            <FeaturePill
-              active={model.extendedThinking}
-              label="Thinking"
-              icon={<Zap size={10} />}
-            />
-          </div>
-
-          {/* Tags */}
-          {model.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3">
-              {model.tags.slice(0, 3).map((tag) => (
+          {/* Feature badges */}
+          <div
+            className="mt-auto px-5 py-3 flex items-center justify-between"
+            style={{ borderTop: '1px solid var(--border-subtle)' }}
+          >
+            <div className="flex gap-2">
+              {model.vision && (
                 <span
-                  key={tag}
-                  className="text-xs px-2 py-0.5 rounded-full"
+                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-md font-medium"
                   style={{
-                    background: 'var(--bg-surface)',
-                    color: 'var(--text-faint)',
-                    border: '1px solid var(--border-subtle)',
+                    background: 'rgba(99,179,237,0.1)',
+                    color: '#63b3ed',
+                    border: '1px solid rgba(99,179,237,0.2)',
                   }}
                 >
-                  {tag}
+                  <Eye size={10} /> Vision
                 </span>
-              ))}
+              )}
+              {model.extendedThinking && (
+                <span
+                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-md font-medium"
+                  style={{
+                    background: 'rgba(124,106,255,0.1)',
+                    color: '#a78bfa',
+                    border: '1px solid rgba(124,106,255,0.2)',
+                  }}
+                >
+                  <Zap size={10} /> Thinking
+                </span>
+              )}
+              {model.openSource && (
+                <span
+                  className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-md font-medium"
+                  style={{
+                    background: 'rgba(52,211,153,0.1)',
+                    color: '#34d399',
+                    border: '1px solid rgba(52,211,153,0.2)',
+                  }}
+                >
+                  Open
+                </span>
+              )}
             </div>
-          )}
-
-          {/* View link indicator */}
-          <div
-            className="flex items-center gap-1 mt-4 text-xs font-medium"
-            style={{ color: 'var(--accent)' }}
-          >
-            View details
-            <ExternalLink size={11} />
+            <span className="text-xs font-medium" style={{ color: 'var(--accent)' }}>
+              Details →
+            </span>
           </div>
         </div>
       </Link>
