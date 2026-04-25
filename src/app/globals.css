@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0d0d0f;
+  --bg-card: #16161a;
+  --bg-card-hover: #1e1e24;
+  --bg-surface: #1a1a20;
+  --border: #2a2a35;
+  --border-subtle: #1e1e28;
+  --text: #e8e8f0;
+  --text-muted: #8888aa;
+  --text-faint: #55556a;
+  --accent: #7c6aff;
+  --accent-dim: #4a3faa;
+  --accent-glow: rgba(124, 106, 255, 0.15);
+  --green: #22d3a0;
+  --red: #f56565;
+  --yellow: #f6ad55;
+  --blue: #63b3ed;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-card: var(--bg-card);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+/* Selection */
+::selection { background: var(--accent-dim); color: var(--text); }
+
+/* Table styles */
+.comparison-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.comparison-table tbody tr:hover td {
+  background-color: var(--bg-card-hover);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card glow on hover */
+.card-glow:hover {
+  box-shadow: 0 0 0 1px var(--accent-dim), 0 8px 32px rgba(124, 106, 255, 0.12);
+}
+
+/* Pill badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Capability dots */
+.capability-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  background: rgba(13, 13, 15, 0.85);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Feature tag */
+.feature-tag {
+  background: rgba(124, 106, 255, 0.12);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 106, 255, 0.2);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
