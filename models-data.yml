@@ -13,6 +13,8 @@ models:
     knowledgeCutoff: "2025-04"
     inputPricePer1M: 15.00
     outputPricePer1M: 75.00
+    consumerPlanName: "Claude Max"
+    consumerPlanPricePerMonth: 100
     openSource: false
     multimodal: true
     vision: true
@@ -47,6 +49,8 @@ models:
     knowledgeCutoff: "2025-04"
     inputPricePer1M: 3.00
     outputPricePer1M: 15.00
+    consumerPlanName: "Claude Pro"
+    consumerPlanPricePerMonth: 20
     openSource: false
     multimodal: true
     vision: true
@@ -81,6 +85,8 @@ models:
     knowledgeCutoff: "2025-04"
     inputPricePer1M: 0.80
     outputPricePer1M: 4.00
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
     openSource: false
     multimodal: true
     vision: true
@@ -115,6 +121,8 @@ models:
     knowledgeCutoff: "2024-04"
     inputPricePer1M: 5.00
     outputPricePer1M: 15.00
+    consumerPlanName: "ChatGPT Plus"
+    consumerPlanPricePerMonth: 20
     openSource: false
     multimodal: true
     vision: true
@@ -149,6 +157,8 @@ models:
     knowledgeCutoff: "2024-07"
     inputPricePer1M: 0.15
     outputPricePer1M: 0.60
+    consumerPlanName: "ChatGPT Free"
+    consumerPlanPricePerMonth: 0
     openSource: false
     multimodal: true
     vision: true
@@ -183,6 +193,8 @@ models:
     knowledgeCutoff: "2024-06"
     inputPricePer1M: 10.00
     outputPricePer1M: 40.00
+    consumerPlanName: "ChatGPT Pro"
+    consumerPlanPricePerMonth: 200
     openSource: false
     multimodal: true
     vision: true
@@ -217,6 +229,8 @@ models:
     knowledgeCutoff: "2024-06"
     inputPricePer1M: 1.10
     outputPricePer1M: 4.40
+    consumerPlanName: "ChatGPT Plus"
+    consumerPlanPricePerMonth: 20
     openSource: false
     multimodal: true
     vision: true
@@ -251,6 +265,8 @@ models:
     knowledgeCutoff: "2025-01"
     inputPricePer1M: 1.25
     outputPricePer1M: 10.00
+    consumerPlanName: "Gemini Advanced"
+    consumerPlanPricePerMonth: 19.99
     openSource: false
     multimodal: true
     vision: true
@@ -285,6 +301,8 @@ models:
     knowledgeCutoff: "2025-01"
     inputPricePer1M: 0.15
     outputPricePer1M: 0.60
+    consumerPlanName: "Gemini Free"
+    consumerPlanPricePerMonth: 0
     openSource: false
     multimodal: true
     vision: true
@@ -319,6 +337,8 @@ models:
     knowledgeCutoff: "2023-12"
     inputPricePer1M: 0.23
     outputPricePer1M: 0.85
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
     openSource: true
     multimodal: false
     vision: false
@@ -353,6 +373,8 @@ models:
     knowledgeCutoff: "2024-08"
     inputPricePer1M: 0.19
     outputPricePer1M: 0.85
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
     openSource: true
     multimodal: true
     vision: true
@@ -387,6 +409,8 @@ models:
     knowledgeCutoff: "2024-04"
     inputPricePer1M: 2.00
     outputPricePer1M: 6.00
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
     openSource: false
     multimodal: false
     vision: false
@@ -421,6 +445,8 @@ models:
     knowledgeCutoff: "2024-07"
     inputPricePer1M: 0.27
     outputPricePer1M: 1.10
+    consumerPlanName: "DeepSeek Chat"
+    consumerPlanPricePerMonth: 0
     openSource: true
     multimodal: false
     vision: false
@@ -455,6 +481,8 @@ models:
     knowledgeCutoff: "2024-07"
     inputPricePer1M: 0.55
     outputPricePer1M: 2.19
+    consumerPlanName: "DeepSeek Chat"
+    consumerPlanPricePerMonth: 0
     openSource: true
     multimodal: false
     vision: false
@@ -489,6 +517,8 @@ models:
     knowledgeCutoff: "2024-11"
     inputPricePer1M: 3.00
     outputPricePer1M: 15.00
+    consumerPlanName: "SuperGrok"
+    consumerPlanPricePerMonth: 30
     openSource: false
     multimodal: true
     vision: true

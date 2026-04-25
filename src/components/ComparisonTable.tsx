@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Check, X, Minus, ChevronDown, ChevronUp } from 'lucide-react';
 import type { AIModel } from '@/types/model';
-import { formatContextWindow, formatPrice, getProviderColor } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
 
 interface ComparisonTableProps {
   models: AIModel[];
@@ -41,6 +41,7 @@ const COLUMNS = [
   { key: 'maxOutput', label: 'Max Out', sortable: true },
   { key: 'inputPricePer1M', label: 'Input/1M', sortable: true },
   { key: 'outputPricePer1M', label: 'Output/1M', sortable: true },
+  { key: 'consumerPlanPricePerMonth', label: 'Monthly Plan', sortable: true },
   { key: 'knowledgeCutoff', label: 'Cutoff', sortable: false },
   { key: 'codeCapability', label: 'Code', sortable: true },
   { key: 'reasoningCapability', label: 'Reasoning', sortable: true },
@@ -162,6 +163,25 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                 </td>
                 <td className="px-3 py-3 text-center whitespace-nowrap" style={{ color: 'var(--yellow)' }}>
                   {formatPrice(model.outputPricePer1M)}
+                </td>
+                <td className="px-3 py-3 text-center whitespace-nowrap">
+                  {(() => {
+                    const plan = formatConsumerPlan(model.consumerPlanName, model.consumerPlanPricePerMonth);
+                    if (!plan) return <Minus size={12} style={{ color: 'var(--text-faint)', margin: '0 auto' }} />;
+                    return (
+                      <div>
+                        <div
+                          className="text-xs font-semibold"
+                          style={{ color: plan.badge === 'Free' ? '#34d399' : '#a78bfa' }}
+                        >
+                          {plan.badge}
+                        </div>
+                        <div className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                          {plan.label}
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </td>
                 <td className="px-3 py-3 text-center whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
                   {model.knowledgeCutoff}

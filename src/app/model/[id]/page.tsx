@@ -12,7 +12,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import { loadModels, getModelById } from '@/lib/data';
-import { formatContextWindow, formatPrice, getProviderColor } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
 
 const SITE_URL = 'https://pickmodel.uk';
 
@@ -343,6 +343,28 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
               value={formatPrice(model.outputPricePer1M)}
               color="var(--yellow)"
             />
+            {(() => {
+              const plan = formatConsumerPlan(model.consumerPlanName, model.consumerPlanPricePerMonth);
+              if (!plan) return null;
+              return (
+                <div
+                  className="mt-4 flex items-center justify-between rounded-xl px-4 py-3"
+                  style={{ background: 'rgba(124,106,255,0.08)', border: '1px solid rgba(124,106,255,0.2)' }}
+                >
+                  <div>
+                    <div className="text-xs font-semibold" style={{ color: '#a78bfa' }}>
+                      Consumer plan
+                    </div>
+                    <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                      {plan.label}
+                    </div>
+                  </div>
+                  <div className="text-lg font-bold" style={{ color: plan.badge === 'Free' ? '#34d399' : '#a78bfa' }}>
+                    {plan.badge}
+                  </div>
+                </div>
+              );
+            })()}
             <div
               className="mt-3 p-3 rounded-lg text-xs"
               style={{ background: 'var(--bg-surface)', color: 'var(--text-faint)' }}

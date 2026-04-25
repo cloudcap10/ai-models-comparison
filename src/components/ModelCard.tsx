@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Zap, Eye, Cpu, DollarSign } from 'lucide-react';
 import type { AIModel } from '@/types/model';
-import { formatContextWindow, formatPrice, getProviderColor } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
 
 interface ModelCardProps {
   model: AIModel;
@@ -61,6 +61,7 @@ function FeaturePill({
 export default function ModelCard({ model, index }: ModelCardProps) {
   const tierStyle = TIER_STYLES[model.tier] ?? TIER_STYLES.standard;
   const providerColor = getProviderColor(model.provider);
+  const consumerPlan = formatConsumerPlan(model.consumerPlanName, model.consumerPlanPricePerMonth);
 
   return (
     <motion.div
@@ -140,11 +141,14 @@ export default function ModelCard({ model, index }: ModelCardProps) {
               <div className="flex items-center gap-1.5 mb-1">
                 <DollarSign size={11} style={{ color: 'var(--text-faint)' }} />
                 <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                  Input / 1M
+                  {consumerPlan ? 'Monthly plan' : 'Input / 1M'}
                 </span>
               </div>
-              <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                {formatPrice(model.inputPricePer1M)}
+              <div
+                className="text-sm font-semibold"
+                style={{ color: consumerPlan ? (consumerPlan.badge === 'Free' ? '#34d399' : '#a78bfa') : 'var(--text)' }}
+              >
+                {consumerPlan ? consumerPlan.badge : formatPrice(model.inputPricePer1M)}
               </div>
             </div>
           </div>

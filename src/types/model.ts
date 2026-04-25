@@ -13,6 +13,8 @@ export interface AIModel {
   knowledgeCutoff: string;
   inputPricePer1M: number;
   outputPricePer1M: number;
+  consumerPlanName: string | null;
+  consumerPlanPricePerMonth: number | null;
   openSource: boolean;
   multimodal: boolean;
   vision: boolean;

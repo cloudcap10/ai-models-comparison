@@ -23,6 +23,15 @@ export function getProviderColor(provider: string): string {
   return colors[provider] ?? '#888888';
 }
 
+export function formatConsumerPlan(
+  name: string | null,
+  price: number | null
+): { label: string; badge: string } | null {
+  if (name === null || price === null) return null;
+  const badge = price === 0 ? 'Free' : `$${price % 1 === 0 ? price : price.toFixed(2)}/mo`;
+  return { label: name, badge };
+}
+
 export function getTierLabel(tier: string): string {
   const labels: Record<string, string> = {
     frontier: 'Frontier',
