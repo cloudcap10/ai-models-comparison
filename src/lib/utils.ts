@@ -36,6 +36,16 @@ export function formatConsumerPlan(
   return { label: name, badge };
 }
 
+/** Returns true when the model's releaseDate (YYYY-MM) is within the last 60 days. */
+export function isNewModel(releaseDate: string): boolean {
+  const [year, month] = releaseDate.split('-').map(Number);
+  if (!year || !month) return false;
+  const released = new Date(year, month - 1, 1);
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 60);
+  return released >= cutoff;
+}
+
 export function getTierLabel(tier: string): string {
   const labels: Record<string, string> = {
     frontier: 'Frontier',

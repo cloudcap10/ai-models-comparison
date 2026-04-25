@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Check, X, Minus, ChevronDown, ChevronUp } from 'lucide-react';
 import type { AIModel } from '@/types/model';
-import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan, isNewModel } from '@/lib/utils';
 
 interface ComparisonTableProps {
   models: AIModel[];
@@ -136,11 +136,27 @@ export default function ComparisonTable({ models }: ComparisonTableProps) {
                       />
                     </div>
                     <div>
-                      <div
-                        className="font-medium leading-tight group-hover:underline"
-                        style={{ color: 'var(--text)', fontSize: '0.8rem' }}
-                      >
-                        {model.name}
+                      <div className="flex items-center gap-1.5">
+                        <div
+                          className="font-medium leading-tight group-hover:underline"
+                          style={{ color: 'var(--text)', fontSize: '0.8rem' }}
+                        >
+                          {model.name}
+                        </div>
+                        {isNewModel(model.releaseDate) && (
+                          <span
+                            className="font-bold rounded px-1"
+                            style={{
+                              background: 'rgba(34,211,160,0.15)',
+                              color: '#22d3a0',
+                              border: '1px solid rgba(34,211,160,0.3)',
+                              fontSize: '0.55rem',
+                              letterSpacing: '0.06em',
+                            }}
+                          >
+                            NEW
+                          </span>
+                        )}
                       </div>
                       <div
                         className="text-xs"

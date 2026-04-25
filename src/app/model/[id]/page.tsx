@@ -12,7 +12,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import { loadModels, getModelById } from '@/lib/data';
-import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan, isNewModel } from '@/lib/utils';
 
 const SITE_URL = 'https://pickmodel.uk';
 
@@ -151,6 +151,7 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
 
   const providerColor = getProviderColor(model.provider);
   const tierStyle = TIER_STYLES[model.tier] ?? TIER_STYLES.standard;
+  const isNew = isNewModel(model.releaseDate);
   const pageUrl = `${SITE_URL}/model/${model.id}`;
 
   const jsonLd = {
@@ -213,6 +214,14 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
                 <span className="pill" style={{ background: tierStyle.bg, color: tierStyle.text }}>
                   {model.tier}
                 </span>
+                {isNew && (
+                  <span
+                    className="pill"
+                    style={{ background: 'rgba(34,211,160,0.15)', color: '#22d3a0', border: '1px solid rgba(34,211,160,0.3)' }}
+                  >
+                    New
+                  </span>
+                )}
                 {model.openSource && (
                   <span
                     className="pill"

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Eye, Zap, Code2, ArrowRight } from 'lucide-react';
 import type { AIModel } from '@/types/model';
-import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan } from '@/lib/utils';
+import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan, isNewModel } from '@/lib/utils';
 
 interface ModelCardProps {
   model: AIModel;
@@ -36,6 +36,7 @@ export default function ModelCard({ model, index }: ModelCardProps) {
   const tierStyle = TIER_STYLES[model.tier] ?? TIER_STYLES.standard;
   const providerColor = getProviderColor(model.provider);
   const consumerPlan = formatConsumerPlan(model.consumerPlanName, model.consumerPlanPricePerMonth);
+  const isNew = isNewModel(model.releaseDate);
 
   return (
     <motion.div
@@ -70,12 +71,28 @@ export default function ModelCard({ model, index }: ModelCardProps) {
                   />
                 </div>
                 <div className="min-w-0">
-                  <h3
-                    className="font-bold text-sm leading-tight truncate"
-                    style={{ color: 'var(--text)' }}
-                  >
-                    {model.name}
-                  </h3>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <h3
+                      className="font-bold text-sm leading-tight truncate"
+                      style={{ color: 'var(--text)' }}
+                    >
+                      {model.name}
+                    </h3>
+                    {isNew && (
+                      <span
+                        className="flex-shrink-0 text-xs font-bold px-1.5 py-0.5 rounded-md"
+                        style={{
+                          background: 'rgba(34,211,160,0.15)',
+                          color: '#22d3a0',
+                          border: '1px solid rgba(34,211,160,0.3)',
+                          fontSize: '0.6rem',
+                          letterSpacing: '0.06em',
+                        }}
+                      >
+                        NEW
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs mt-0.5" style={{ color: providerColor }}>
                     {model.provider}
                   </p>
