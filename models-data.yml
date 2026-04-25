@@ -251,20 +251,20 @@ models:
     tags: [reasoning, affordable, math]
     tier: standard
 
-  - id: gemini-2-5-pro
-    name: Gemini 2.5 Pro
+  - id: gemini-3-1-pro
+    name: Gemini 3.1 Pro
     provider: Google
     icon: /icons/google.svg
-    link: https://deepmind.google/technologies/gemini/
+    link: https://deepmind.google/models/gemini/pro/
     description: >
-      Google's most capable Gemini model. Leads on coding benchmarks and features
-      a massive 1M token context window for document-scale understanding.
-    releaseDate: "2025-03"
-    contextWindow: 1000000
+      Google's current flagship. Leads coding and reasoning benchmarks with a
+      2M-token context window, native multimodal inputs, and agentic optimisations.
+    releaseDate: "2026-02"
+    contextWindow: 2000000
     maxOutput: 65536
     knowledgeCutoff: "2025-01"
-    inputPricePer1M: 1.25
-    outputPricePer1M: 10.00
+    inputPricePer1M: 2.00
+    outputPricePer1M: 12.00
     consumerPlanName: "Gemini Advanced"
     consumerPlanPricePerMonth: 19.99
     openSource: false
@@ -284,7 +284,7 @@ models:
     multilingualCapability: 5
     safetyRating: 4
     speedRating: 3
-    tags: [long-context, coding, multimodal]
+    tags: [flagship, long-context, coding, multimodal, agentic]
     tier: frontier
 
   - id: gemini-2-5-flash
@@ -538,3 +538,187 @@ models:
     speedRating: 3
     tags: [flagship, web-search, math, science]
     tier: frontier
+
+  - id: deepseek-v4
+    name: DeepSeek V4
+    provider: DeepSeek
+    icon: /icons/deepseek.svg
+    link: https://deepseek.com/
+    description: >
+      DeepSeek's latest flagship MoE model with 1.6T parameters and 49B active.
+      Dramatically expands context to 1M tokens with optional thinking mode —
+      still at a fraction of the cost of Western labs.
+    releaseDate: "2026-03"
+    contextWindow: 1000000
+    maxOutput: 32768
+    knowledgeCutoff: "2025-06"
+    inputPricePer1M: 1.74
+    outputPricePer1M: 3.48
+    consumerPlanName: "DeepSeek Chat"
+    consumerPlanPricePerMonth: 0
+    openSource: true
+    multimodal: false
+    vision: false
+    audio: false
+    video: false
+    functionCalling: true
+    jsonMode: true
+    fineTuning: false
+    streaming: true
+    batchAPI: false
+    promptCaching: true
+    extendedThinking: true
+    codeCapability: 5
+    reasoningCapability: 5
+    multilingualCapability: 3
+    safetyRating: 2
+    speedRating: 3
+    tags: [open-source, long-context, cost-effective, moe]
+    tier: frontier
+
+  - id: glm-5-1
+    name: GLM-5.1
+    provider: Z.ai
+    icon: /icons/zhipu.svg
+    link: https://z.ai/
+    description: >
+      Z.ai's frontier reasoning model built on a 744B MoE architecture.
+      Tops SWE-Bench Pro coding benchmarks and excels at agentic tasks
+      at a fraction of the price of comparable Western models.
+    releaseDate: "2026-04"
+    contextWindow: 200000
+    maxOutput: 65536
+    knowledgeCutoff: "2025-06"
+    inputPricePer1M: 1.05
+    outputPricePer1M: 3.50
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
+    openSource: false
+    multimodal: true
+    vision: true
+    audio: false
+    video: false
+    functionCalling: true
+    jsonMode: true
+    fineTuning: false
+    streaming: true
+    batchAPI: false
+    promptCaching: false
+    extendedThinking: true
+    codeCapability: 5
+    reasoningCapability: 5
+    multilingualCapability: 4
+    safetyRating: 3
+    speedRating: 3
+    tags: [reasoning, coding, agentic, moe]
+    tier: frontier
+
+  - id: mimo-v2-5-pro
+    name: MiMo-V2.5-Pro
+    provider: Xiaomi
+    icon: /icons/xiaomi.svg
+    link: https://mimo.xiaomi.com/mimo-v2-5-pro
+    description: >
+      Xiaomi's flagship agentic model with 1T parameters and full multimodal support.
+      Tops SWE-bench Pro and ClawEval at 8x lower output cost than Claude Opus.
+    releaseDate: "2026-04"
+    contextWindow: 1000000
+    maxOutput: 32768
+    knowledgeCutoff: "2025-06"
+    inputPricePer1M: 1.00
+    outputPricePer1M: 3.00
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
+    openSource: false
+    multimodal: true
+    vision: true
+    audio: true
+    video: true
+    functionCalling: true
+    jsonMode: true
+    fineTuning: false
+    streaming: true
+    batchAPI: false
+    promptCaching: false
+    extendedThinking: true
+    codeCapability: 5
+    reasoningCapability: 5
+    multilingualCapability: 3
+    safetyRating: 3
+    speedRating: 3
+    tags: [agentic, multimodal, long-context, coding]
+    tier: frontier
+
+  - id: qwen3-6-plus
+    name: Qwen3.6 Plus
+    provider: Alibaba
+    icon: /icons/alibaba.svg
+    link: https://qwen.ai/
+    description: >
+      Alibaba's latest hybrid MoE model with always-on chain-of-thought reasoning
+      and a 1M-token context window. Competitive with frontier models on coding
+      and agentic benchmarks at a very low price point.
+    releaseDate: "2026-04"
+    contextWindow: 1000000
+    maxOutput: 65536
+    knowledgeCutoff: "2025-06"
+    inputPricePer1M: 0.33
+    outputPricePer1M: 1.95
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
+    openSource: true
+    multimodal: true
+    vision: true
+    audio: false
+    video: false
+    functionCalling: true
+    jsonMode: true
+    fineTuning: false
+    streaming: true
+    batchAPI: false
+    promptCaching: false
+    extendedThinking: true
+    codeCapability: 5
+    reasoningCapability: 4
+    multilingualCapability: 5
+    safetyRating: 3
+    speedRating: 4
+    tags: [open-source, long-context, reasoning, cost-effective]
+    tier: frontier
+
+  - id: minimax-m2-7
+    name: MiniMax M2.7
+    provider: MiniMax
+    icon: /icons/minimax.svg
+    link: https://www.minimax.io/models/text/m27
+    description: >
+      MiniMax's compact 230B MoE reasoning model with only 10B active parameters.
+      Punches well above its weight on intelligence benchmarks with fast inference
+      and two API speed tiers.
+    releaseDate: "2026-03"
+    contextWindow: 200000
+    maxOutput: 40960
+    knowledgeCutoff: "2025-06"
+    inputPricePer1M: 0.30
+    outputPricePer1M: 1.20
+    consumerPlanName: null
+    consumerPlanPricePerMonth: null
+    openSource: false
+    multimodal: false
+    vision: false
+    audio: false
+    video: false
+    functionCalling: true
+    jsonMode: true
+    fineTuning: false
+    streaming: true
+    batchAPI: false
+    promptCaching: false
+    extendedThinking: true
+    codeCapability: 4
+    reasoningCapability: 4
+    multilingualCapability: 4
+    safetyRating: 3
+    speedRating: 4
+    tags: [reasoning, cost-effective, moe]
+    tier: standard

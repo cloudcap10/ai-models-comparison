@@ -19,6 +19,10 @@ export function getProviderColor(provider: string): string {
     'Mistral AI': '#F7461C',
     DeepSeek: '#536DFE',
     xAI: '#AAAAAA',
+    Alibaba: '#FF6A00',
+    'Z.ai': '#00C6A2',
+    Xiaomi: '#FF6900',
+    MiniMax: '#7B61FF',
   };
   return colors[provider] ?? '#888888';
 }
