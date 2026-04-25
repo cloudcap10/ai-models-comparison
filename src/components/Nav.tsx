@@ -26,6 +26,19 @@ export default function Nav() {
             Compare
           </Link>
           <Link
+            href="/calculator"
+            className="text-sm transition-colors"
+            style={{ color: 'var(--text-muted)' }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-muted)';
+            }}
+          >
+            Calculator
+          </Link>
+          <Link
             href="/about"
             className="text-sm transition-colors"
             style={{ color: 'var(--text-muted)' }}

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, GitFork, Sparkles } from 'lucide-react';
+import { Brain, GitFork, Sparkles, Calculator } from 'lucide-react';
 
 interface HeroProps {
   modelCount: number;
@@ -114,6 +114,24 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
             Explore Models
           </a>
           <a
+            href="/calculator"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"
+            style={{
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border)',
+              color: 'var(--text-muted)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-muted)';
+            }}
+          >
+            <Calculator size={16} />
+            Cost Calculator
+          </a>
+          <a
             href="https://github.com/cloudcap10/pickmodel"
             target="_blank"
             rel="noopener noreferrer"
@@ -131,7 +149,7 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
             }}
           >
             <GitFork size={16} />
-            Contribute on GitHub
+            GitHub
           </a>
         </motion.div>
 
