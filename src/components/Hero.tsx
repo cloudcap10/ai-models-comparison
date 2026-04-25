@@ -74,9 +74,8 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
           className="text-5xl sm:text-6xl font-bold tracking-tight mb-5"
           style={{ lineHeight: 1.1 }}
         >
-          <span className="gradient-text">AI Model</span>
-          <br />
-          <span style={{ color: 'var(--text)' }}>Comparison</span>
+          <span className="gradient-text">Pick</span>
+          <span style={{ color: 'var(--text)' }}>Model</span>
         </motion.h1>
 
         <motion.p
@@ -86,10 +85,10 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
           className="text-lg mb-10 max-w-2xl mx-auto"
           style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}
         >
-          An objective, data-driven comparison of{' '}
-          <span style={{ color: 'var(--text)' }}>{modelCount} AI models</span> from{' '}
-          <span style={{ color: 'var(--text)' }}>{providerCount} providers</span>. Compare
-          context windows, pricing, capabilities, and more — all in one place.
+          Compare <span style={{ color: 'var(--text)' }}>{modelCount} AI models</span> from{' '}
+          <span style={{ color: 'var(--text)' }}>{providerCount} providers</span> — context
+          windows, pricing, reasoning, speed and features, all in one place. Free and
+          regularly updated.
         </motion.p>
 
         <motion.div
@@ -115,7 +114,7 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
             Explore Models
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/cloudcap10/ai-models-comparison"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"

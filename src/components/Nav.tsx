@@ -9,7 +9,7 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold text-sm">
           <Brain size={18} style={{ color: 'var(--accent)' }} />
-          <span style={{ color: 'var(--text)' }}>AI Model Comparison</span>
+          <span style={{ color: 'var(--text)' }}>PickModel</span>
         </Link>
         <div className="flex items-center gap-5">
           <Link
@@ -39,7 +39,7 @@ export default function Nav() {
             About
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/cloudcap10/ai-models-comparison"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm transition-colors"
