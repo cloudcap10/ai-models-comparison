@@ -138,6 +138,64 @@ function CapabilityBar({ label, value }: { label: string; value: number }) {
   );
 }
 
+function BenchmarkBar({
+  label,
+  description,
+  score,
+}: {
+  label: string;
+  description: string;
+  score: number | null;
+}) {
+  if (score === null) {
+    return (
+      <div className="mb-4">
+        <div className="flex items-center justify-between mb-1.5">
+          <div>
+            <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+              {label}
+            </span>
+            <span className="text-xs ml-2" style={{ color: 'var(--text-faint)' }}>
+              {description}
+            </span>
+          </div>
+          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+            N/A
+          </span>
+        </div>
+        <div className="h-2 rounded-full" style={{ background: 'var(--border)' }} />
+      </div>
+    );
+  }
+
+  const color =
+    score >= 90 ? '#22d3a0' : score >= 75 ? '#7c6aff' : score >= 60 ? '#f6ad55' : '#f56565';
+
+  return (
+    <div className="mb-4">
+      <div className="flex items-center justify-between mb-1.5">
+        <div>
+          <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+            {label}
+          </span>
+          <span className="text-xs ml-2" style={{ color: 'var(--text-faint)' }}>
+            {description}
+          </span>
+        </div>
+        <span className="text-sm font-bold" style={{ color }}>
+          {score}%
+        </span>
+      </div>
+      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+        <div
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${score}%`, background: color }}
+        />
+      </div>
+    </div>
+  );
+}
+
 const TIER_STYLES: Record<string, { bg: string; text: string }> = {
   frontier: { bg: 'rgba(124,106,255,0.15)', text: '#a78bfa' },
   standard: { bg: 'rgba(99,179,237,0.15)', text: '#63b3ed' },
@@ -340,6 +398,36 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
             <BoolMetric label="Prompt caching" value={model.promptCaching} />
             <BoolMetric label="Fine-tuning" value={model.fineTuning} />
           </Section>
+
+          {model.benchmarks && (
+            <Section title="Benchmarks">
+              <BenchmarkBar
+                label="MMLU"
+                description="General knowledge"
+                score={model.benchmarks.mmlu}
+              />
+              <BenchmarkBar
+                label="HumanEval"
+                description="Code generation"
+                score={model.benchmarks.humaneval}
+              />
+              <BenchmarkBar
+                label="MATH"
+                description="Mathematical reasoning"
+                score={model.benchmarks.math}
+              />
+              <BenchmarkBar
+                label="GPQA Diamond"
+                description="Hard science Q&A"
+                score={model.benchmarks.gpqa}
+              />
+              <p className="text-xs mt-3" style={{ color: 'var(--text-faint)' }}>
+                Source: provider technical reports. N/A = not yet published.
+                Independent verification recommended — results vary across
+                benchmark versions and evaluation setups.
+              </p>
+            </Section>
+          )}
 
           <Section title="Pricing (per 1M tokens)">
             <Metric

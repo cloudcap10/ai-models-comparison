@@ -39,6 +39,11 @@ models:
   - coding
   - agentic
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: claude-sonnet-4-6
   name: Claude Sonnet 4.6
   provider: Anthropic
@@ -78,6 +83,11 @@ models:
   - coding
   - everyday
   tier: standard
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: claude-haiku-4-5
   name: Claude Haiku 4.5
   provider: Anthropic
@@ -117,6 +127,11 @@ models:
   - lightweight
   - cost-effective
   tier: lite
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: gpt-4o
   name: GPT-4o
   provider: OpenAI
@@ -156,6 +171,11 @@ models:
   - omnimodal
   - multilingual
   tier: frontier
+  benchmarks:
+    mmlu: 88.7
+    humaneval: 90.2
+    math: 76.6
+    gpqa: 53.6
 - id: gpt-4o-mini
   name: GPT-4o mini
   provider: OpenAI
@@ -195,6 +215,11 @@ models:
   - small
   - vision
   tier: lite
+  benchmarks:
+    mmlu: 82.0
+    humaneval: 87.2
+    math: 70.2
+    gpqa: 40.9
 - id: o3
   name: o3
   provider: OpenAI
@@ -235,6 +260,11 @@ models:
   - math
   - coding
   tier: frontier
+  benchmarks:
+    mmlu: 96.7
+    humaneval: 99.1
+    math: 99.3
+    gpqa: 87.7
 - id: o4-mini
   name: o4-mini
   provider: OpenAI
@@ -274,6 +304,11 @@ models:
   - affordable
   - math
   tier: standard
+  benchmarks:
+    mmlu: 93.3
+    humaneval: 95.2
+    math: 97.0
+    gpqa: 79.7
 - id: gemini-3-1-pro
   name: Gemini 3.1 Pro
   provider: Google
@@ -315,6 +350,11 @@ models:
   - multimodal
   - agentic
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: gemini-2-5-flash
   name: Gemini 2.5 Flash
   provider: Google
@@ -355,6 +395,11 @@ models:
   - affordable
   - long-context
   tier: standard
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: llama-3-3-70b
   name: Llama 3.3 70B
   provider: Meta
@@ -394,6 +439,11 @@ models:
   - self-hostable
   - fine-tuning
   tier: standard
+  benchmarks:
+    mmlu: 86.0
+    humaneval: 88.4
+    math: 77.0
+    gpqa: 50.5
 - id: llama-4-maverick
   name: Llama 4 Maverick
   provider: Meta
@@ -434,6 +484,11 @@ models:
   - long-context
   - moe
   tier: frontier
+  benchmarks:
+    mmlu: 89.2
+    humaneval: null
+    math: 88.0
+    gpqa: 69.8
 - id: mistral-large-2
   name: Mistral Large 2
   provider: Mistral AI
@@ -473,6 +528,11 @@ models:
   - on-premise
   - coding
   tier: standard
+  benchmarks:
+    mmlu: 84.0
+    humaneval: 92.0
+    math: 73.0
+    gpqa: null
 - id: deepseek-v3
   name: DeepSeek V3
   provider: DeepSeek
@@ -512,6 +572,11 @@ models:
   - cost-effective
   - coding
   tier: frontier
+  benchmarks:
+    mmlu: 88.5
+    humaneval: 89.0
+    math: 90.2
+    gpqa: 59.1
 - id: deepseek-r1
   name: DeepSeek R1
   provider: DeepSeek
@@ -551,6 +616,11 @@ models:
   - reasoning
   - math
   tier: frontier
+  benchmarks:
+    mmlu: 90.8
+    humaneval: 92.0
+    math: 97.3
+    gpqa: 71.5
 - id: grok-3
   name: Grok 3
   provider: xAI
@@ -591,6 +661,11 @@ models:
   - math
   - science
   tier: frontier
+  benchmarks:
+    mmlu: 93.3
+    humaneval: null
+    math: 93.3
+    gpqa: 84.6
 - id: deepseek-v4
   name: DeepSeek V4
   provider: DeepSeek
@@ -632,6 +707,11 @@ models:
   - cost-effective
   - moe
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: glm-5-1
   name: GLM-5.1
   provider: Z.ai
@@ -673,6 +753,11 @@ models:
   - agentic
   - moe
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: mimo-v2-5-pro
   name: MiMo-V2.5-Pro
   provider: Xiaomi
@@ -713,6 +798,11 @@ models:
   - long-context
   - coding
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: qwen3-6-plus
   name: Qwen3.6 Plus
   provider: Alibaba
@@ -754,6 +844,11 @@ models:
   - reasoning
   - cost-effective
   tier: frontier
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null
 - id: minimax-m2-7
   name: MiniMax M2.7
   provider: MiniMax
@@ -794,3 +889,8 @@ models:
   - cost-effective
   - moe
   tier: standard
+  benchmarks:
+    mmlu: null
+    humaneval: null
+    math: null
+    gpqa: null

@@ -34,6 +34,12 @@ export interface AIModel {
   speedRating: number;
   tags: string[];
   tier: Tier;
+  benchmarks: {
+    mmlu: number | null;
+    humaneval: number | null;
+    math: number | null;
+    gpqa: number | null;
+  } | null;
 }
 
 export interface ModelsData {
