@@ -111,8 +111,7 @@ function SliderRow({ label, hint, value, min, max, step, display, onChange }: Sl
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-        style={{ accentColor: 'var(--accent)', background: 'var(--border)' }}
+        className="w-full"
       />
     </div>
   );

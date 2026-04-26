@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
+
   --bg: #0d0d0f;
   --bg-card: #13131a;
   --bg-card-hover: #1a1a24;
@@ -34,6 +36,7 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg);
 }
 
 body {
@@ -42,6 +45,83 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ── Form elements: force dark background on all browsers ── */
+input,
+textarea,
+select {
+  background-color: var(--bg-surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* Select: remove native arrow, add custom SVG arrow */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2355556e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+/* Option elements inside selects */
+option {
+  background-color: var(--bg-surface);
+  color: var(--text);
+}
+
+/* ── Range input: cross-browser dark track + thumb ── */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--border);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: -6px;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--accent-dim);
+  transition: box-shadow 0.15s;
+}
+
+input[type='range']:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgba(124, 106, 255, 0.25);
+}
+
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--border);
+  border: none;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+}
+
+/* Text inputs: make placeholder legible on dark */
+input::placeholder {
+  color: var(--text-faint);
 }
 
 /* Scrollbar */
