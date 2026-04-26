@@ -30,8 +30,9 @@ export async function generateMetadata({
   const model = getModelById(id);
   if (!model) return {};
 
-  const title = `${model.name} Review & Specs — Context, Pricing, Capabilities`;
-  const description = `${model.name} by ${model.provider}: ${formatContextWindow(model.contextWindow)} context window, $${model.inputPricePer1M}/1M input tokens, ${model.openSource ? 'open source' : 'proprietary'}. Full specs, pricing and capability breakdown.`;
+  const title = `${model.name} — Specs, Pricing & Benchmarks`;
+  const mmluStr = model.benchmarks?.mmlu != null ? `, MMLU ${model.benchmarks.mmlu}%` : '';
+  const description = `${model.name} by ${model.provider}: ${formatContextWindow(model.contextWindow)} context, $${model.inputPricePer1M}/1M input tokens${mmluStr}. Full specs, benchmark scores, pricing, and feature comparison.`;
   const url = `${SITE_URL}/model/${model.id}`;
 
   return {
@@ -220,20 +221,24 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
     operatingSystem: 'Web',
     url: model.link,
     description: model.description,
-    author: {
-      '@type': 'Organization',
-      name: model.provider,
-    },
+    author: { '@type': 'Organization', name: model.provider },
     offers: {
       '@type': 'Offer',
       price: model.inputPricePer1M,
       priceCurrency: 'USD',
       description: `$${model.inputPricePer1M} per 1M input tokens`,
     },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': pageUrl,
-    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+  };
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'PickModel', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Compare Models', item: SITE_URL },
+      { '@type': 'ListItem', position: 3, name: model.name, item: pageUrl },
+    ],
   };
 
   return (
@@ -241,6 +246,10 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <div className="max-w-5xl mx-auto px-4 py-10">
         <Link

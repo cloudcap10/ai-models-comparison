@@ -1,37 +1,44 @@
 import type { MetadataRoute } from 'next';
+import { loadModels } from '@/lib/data';
 
 export const dynamic = 'force-static';
-import { loadModels } from '@/lib/data';
 
 const SITE_URL = 'https://pickmodel.uk';
 
+function releaseDateToDate(yyyyMM: string): Date {
+  const [year, month] = yyyyMM.split('-').map(Number);
+  if (!year || !month) return new Date();
+  return new Date(year, month - 1, 1);
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const models = loadModels();
+  const now = new Date();
 
   const modelPages = models.map((m) => ({
     url: `${SITE_URL}/model/${m.id}`,
-    lastModified: new Date(),
+    lastModified: releaseDateToDate(m.releaseDate),
     changeFrequency: 'weekly' as const,
-    priority: 0.8,
+    priority: m.tier === 'frontier' ? 0.9 : 0.8,
   }));
 
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
+      lastModified: now,
+      changeFrequency: 'daily' as const,
       priority: 1,
     },
     {
       url: `${SITE_URL}/calculator`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
     {
       url: `${SITE_URL}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
       priority: 0.4,
     },
     ...modelPages,

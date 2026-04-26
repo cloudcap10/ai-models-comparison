@@ -1,5 +1,20 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Database, Users, RefreshCw, Code } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'About PickModel — How We Compare AI Models',
+  description:
+    'PickModel is a free, open-source AI model comparison tool. Learn how our data is sourced, updated weekly, and how you can contribute new models or fix pricing.',
+  alternates: { canonical: 'https://pickmodel.uk/about' },
+  openGraph: {
+    title: 'About PickModel — How We Compare AI Models',
+    description:
+      'Free, open-source AI model comparison. Community-maintained data updated weekly. Learn how to contribute.',
+    url: 'https://pickmodel.uk/about',
+    type: 'website',
+  },
+};
 
 export default function AboutPage() {
   return (
