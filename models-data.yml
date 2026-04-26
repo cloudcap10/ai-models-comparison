@@ -1,724 +1,796 @@
 models:
-  - id: claude-opus-4-7
-    name: Claude Opus 4.7
-    provider: Anthropic
-    icon: /icons/anthropic.svg
-    link: https://anthropic.com/claude
-    description: >
-      Anthropic's most capable model. Exceptionally strong at complex reasoning,
-      research, coding, and agentic tasks. Sets new standards for frontier AI.
-    releaseDate: "2025-08"
-    contextWindow: 200000
-    maxOutput: 32000
-    knowledgeCutoff: "2025-04"
-    inputPricePer1M: 15.00
-    outputPricePer1M: 75.00
-    consumerPlanName: "Claude Max"
-    consumerPlanPricePerMonth: 100
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 4
-    safetyRating: 5
-    speedRating: 3
-    tags: [flagship, reasoning, coding, agentic]
-    tier: frontier
+- id: claude-opus-4-7
+  name: Claude Opus 4.7
+  provider: Anthropic
+  icon: /icons/anthropic.svg
+  link: https://anthropic.com/claude
+  description: 'Anthropic''s most capable model. Exceptionally strong at complex reasoning,
+    research, coding, and agentic tasks. Sets new standards for frontier AI.
 
-  - id: claude-sonnet-4-6
-    name: Claude Sonnet 4.6
-    provider: Anthropic
-    icon: /icons/anthropic.svg
-    link: https://anthropic.com/claude
-    description: >
-      Anthropic's best model for coding and everyday tasks. Exceptional balance
-      of speed, intelligence, and cost — the workhorse of the Claude family.
-    releaseDate: "2025-07"
-    contextWindow: 200000
-    maxOutput: 64000
-    knowledgeCutoff: "2025-04"
-    inputPricePer1M: 3.00
-    outputPricePer1M: 15.00
-    consumerPlanName: "Claude Pro"
-    consumerPlanPricePerMonth: 20
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 4
-    multilingualCapability: 4
-    safetyRating: 5
-    speedRating: 4
-    tags: [best-value, coding, everyday]
-    tier: standard
+    '
+  releaseDate: 2025-08
+  contextWindow: 1000000
+  maxOutput: 32000
+  knowledgeCutoff: 2025-04
+  inputPricePer1M: 5.0
+  outputPricePer1M: 25.0
+  consumerPlanName: Claude Max
+  consumerPlanPricePerMonth: 100
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 4
+  safetyRating: 5
+  speedRating: 3
+  tags:
+  - flagship
+  - reasoning
+  - coding
+  - agentic
+  tier: frontier
+- id: claude-sonnet-4-6
+  name: Claude Sonnet 4.6
+  provider: Anthropic
+  icon: /icons/anthropic.svg
+  link: https://anthropic.com/claude
+  description: 'Anthropic''s best model for coding and everyday tasks. Exceptional
+    balance of speed, intelligence, and cost — the workhorse of the Claude family.
 
-  - id: claude-haiku-4-5
-    name: Claude Haiku 4.5
-    provider: Anthropic
-    icon: /icons/anthropic.svg
-    link: https://anthropic.com/claude
-    description: >
-      Anthropic's fastest and most compact model. Ideal for lightweight agents,
-      high-throughput pipelines, and latency-sensitive applications.
-    releaseDate: "2025-07"
-    contextWindow: 200000
-    maxOutput: 16000
-    knowledgeCutoff: "2025-04"
-    inputPricePer1M: 0.80
-    outputPricePer1M: 4.00
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: false
-    codeCapability: 4
-    reasoningCapability: 3
-    multilingualCapability: 4
-    safetyRating: 5
-    speedRating: 5
-    tags: [fastest, lightweight, cost-effective]
-    tier: lite
+    '
+  releaseDate: 2025-07
+  contextWindow: 1000000
+  maxOutput: 64000
+  knowledgeCutoff: 2025-04
+  inputPricePer1M: 3.0
+  outputPricePer1M: 15.0
+  consumerPlanName: Claude Pro
+  consumerPlanPricePerMonth: 20
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 4
+  multilingualCapability: 4
+  safetyRating: 5
+  speedRating: 4
+  tags:
+  - best-value
+  - coding
+  - everyday
+  tier: standard
+- id: claude-haiku-4-5
+  name: Claude Haiku 4.5
+  provider: Anthropic
+  icon: /icons/anthropic.svg
+  link: https://anthropic.com/claude
+  description: 'Anthropic''s fastest and most compact model. Ideal for lightweight
+    agents, high-throughput pipelines, and latency-sensitive applications.
 
-  - id: gpt-4o
-    name: GPT-4o
-    provider: OpenAI
-    icon: /icons/openai.svg
-    link: https://openai.com/gpt-4o
-    description: >
-      OpenAI's flagship omnimodal model. Handles text, audio, and images natively
-      in a single model, with strong reasoning and broad multilingual support.
-    releaseDate: "2024-05"
-    contextWindow: 128000
-    maxOutput: 16384
-    knowledgeCutoff: "2024-04"
-    inputPricePer1M: 5.00
-    outputPricePer1M: 15.00
-    consumerPlanName: "ChatGPT Plus"
-    consumerPlanPricePerMonth: 20
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: true
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: true
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: false
-    codeCapability: 5
-    reasoningCapability: 4
-    multilingualCapability: 5
-    safetyRating: 4
-    speedRating: 4
-    tags: [flagship, omnimodal, multilingual]
-    tier: frontier
+    '
+  releaseDate: 2025-07
+  contextWindow: 200000
+  maxOutput: 16000
+  knowledgeCutoff: 2025-04
+  inputPricePer1M: 1.0
+  outputPricePer1M: 5.0
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: false
+  codeCapability: 4
+  reasoningCapability: 3
+  multilingualCapability: 4
+  safetyRating: 5
+  speedRating: 5
+  tags:
+  - fastest
+  - lightweight
+  - cost-effective
+  tier: lite
+- id: gpt-4o
+  name: GPT-4o
+  provider: OpenAI
+  icon: /icons/openai.svg
+  link: https://openai.com/gpt-4o
+  description: 'OpenAI''s flagship omnimodal model. Handles text, audio, and images
+    natively in a single model, with strong reasoning and broad multilingual support.
 
-  - id: gpt-4o-mini
-    name: GPT-4o mini
-    provider: OpenAI
-    icon: /icons/openai.svg
-    link: https://openai.com/gpt-4o-mini
-    description: >
-      OpenAI's affordable small model with vision. Replaces GPT-3.5 Turbo with
-      stronger performance and multimodal capabilities at a fraction of the cost.
-    releaseDate: "2024-07"
-    contextWindow: 128000
-    maxOutput: 16384
-    knowledgeCutoff: "2024-07"
-    inputPricePer1M: 0.15
-    outputPricePer1M: 0.60
-    consumerPlanName: "ChatGPT Free"
-    consumerPlanPricePerMonth: 0
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: true
-    streaming: true
-    batchAPI: true
-    promptCaching: false
-    extendedThinking: false
-    codeCapability: 3
-    reasoningCapability: 3
-    multilingualCapability: 4
-    safetyRating: 4
-    speedRating: 5
-    tags: [affordable, small, vision]
-    tier: lite
+    '
+  releaseDate: 2024-05
+  contextWindow: 128000
+  maxOutput: 16384
+  knowledgeCutoff: 2024-04
+  inputPricePer1M: 2.5
+  outputPricePer1M: 10.0
+  consumerPlanName: ChatGPT Plus
+  consumerPlanPricePerMonth: 20
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: true
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: true
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: false
+  codeCapability: 5
+  reasoningCapability: 4
+  multilingualCapability: 5
+  safetyRating: 4
+  speedRating: 4
+  tags:
+  - flagship
+  - omnimodal
+  - multilingual
+  tier: frontier
+- id: gpt-4o-mini
+  name: GPT-4o mini
+  provider: OpenAI
+  icon: /icons/openai.svg
+  link: https://openai.com/gpt-4o-mini
+  description: 'OpenAI''s affordable small model with vision. Replaces GPT-3.5 Turbo
+    with stronger performance and multimodal capabilities at a fraction of the cost.
 
-  - id: o3
-    name: o3
-    provider: OpenAI
-    icon: /icons/openai.svg
-    link: https://openai.com/o3
-    description: >
-      OpenAI's most powerful reasoning model. Excels at science, math, coding,
-      and complex multi-step problems through deep chain-of-thought reasoning.
-    releaseDate: "2025-04"
-    contextWindow: 200000
-    maxOutput: 100000
-    knowledgeCutoff: "2024-06"
-    inputPricePer1M: 10.00
-    outputPricePer1M: 40.00
-    consumerPlanName: "ChatGPT Pro"
-    consumerPlanPricePerMonth: 200
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 4
-    safetyRating: 4
-    speedRating: 2
-    tags: [reasoning, science, math, coding]
-    tier: frontier
+    '
+  releaseDate: 2024-07
+  contextWindow: 128000
+  maxOutput: 16384
+  knowledgeCutoff: 2024-07
+  inputPricePer1M: 0.15
+  outputPricePer1M: 0.6
+  consumerPlanName: ChatGPT Free
+  consumerPlanPricePerMonth: 0
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: true
+  streaming: true
+  batchAPI: true
+  promptCaching: false
+  extendedThinking: false
+  codeCapability: 3
+  reasoningCapability: 3
+  multilingualCapability: 4
+  safetyRating: 4
+  speedRating: 5
+  tags:
+  - affordable
+  - small
+  - vision
+  tier: lite
+- id: o3
+  name: o3
+  provider: OpenAI
+  icon: /icons/openai.svg
+  link: https://openai.com/o3
+  description: 'OpenAI''s most powerful reasoning model. Excels at science, math,
+    coding, and complex multi-step problems through deep chain-of-thought reasoning.
 
-  - id: o4-mini
-    name: o4-mini
-    provider: OpenAI
-    icon: /icons/openai.svg
-    link: https://openai.com/o4-mini
-    description: >
-      A compact reasoning model from OpenAI. Delivers strong math and coding
-      performance at much lower cost than o3, with faster response times.
-    releaseDate: "2025-04"
-    contextWindow: 200000
-    maxOutput: 100000
-    knowledgeCutoff: "2024-06"
-    inputPricePer1M: 1.10
-    outputPricePer1M: 4.40
-    consumerPlanName: "ChatGPT Plus"
-    consumerPlanPricePerMonth: 20
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 4
-    multilingualCapability: 4
-    safetyRating: 4
-    speedRating: 3
-    tags: [reasoning, affordable, math]
-    tier: standard
+    '
+  releaseDate: 2025-04
+  contextWindow: 200000
+  maxOutput: 100000
+  knowledgeCutoff: 2024-06
+  inputPricePer1M: 2.0
+  outputPricePer1M: 8.0
+  consumerPlanName: ChatGPT Pro
+  consumerPlanPricePerMonth: 200
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 4
+  safetyRating: 4
+  speedRating: 2
+  tags:
+  - reasoning
+  - science
+  - math
+  - coding
+  tier: frontier
+- id: o4-mini
+  name: o4-mini
+  provider: OpenAI
+  icon: /icons/openai.svg
+  link: https://openai.com/o4-mini
+  description: 'A compact reasoning model from OpenAI. Delivers strong math and coding
+    performance at much lower cost than o3, with faster response times.
 
-  - id: gemini-3-1-pro
-    name: Gemini 3.1 Pro
-    provider: Google
-    icon: /icons/google.svg
-    link: https://deepmind.google/models/gemini/pro/
-    description: >
-      Google's current flagship. Leads coding and reasoning benchmarks with a
-      2M-token context window, native multimodal inputs, and agentic optimisations.
-    releaseDate: "2026-02"
-    contextWindow: 2000000
-    maxOutput: 65536
-    knowledgeCutoff: "2025-01"
-    inputPricePer1M: 2.00
-    outputPricePer1M: 12.00
-    consumerPlanName: "Gemini Advanced"
-    consumerPlanPricePerMonth: 19.99
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: true
-    video: true
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 5
-    safetyRating: 4
-    speedRating: 3
-    tags: [flagship, long-context, coding, multimodal, agentic]
-    tier: frontier
+    '
+  releaseDate: 2025-04
+  contextWindow: 200000
+  maxOutput: 100000
+  knowledgeCutoff: 2024-06
+  inputPricePer1M: 1.1
+  outputPricePer1M: 4.4
+  consumerPlanName: ChatGPT Plus
+  consumerPlanPricePerMonth: 20
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 4
+  multilingualCapability: 4
+  safetyRating: 4
+  speedRating: 3
+  tags:
+  - reasoning
+  - affordable
+  - math
+  tier: standard
+- id: gemini-3-1-pro
+  name: Gemini 3.1 Pro
+  provider: Google
+  icon: /icons/google.svg
+  link: https://deepmind.google/models/gemini/pro/
+  description: 'Google''s current flagship. Leads coding and reasoning benchmarks
+    with a 2M-token context window, native multimodal inputs, and agentic optimisations.
 
-  - id: gemini-2-5-flash
-    name: Gemini 2.5 Flash
-    provider: Google
-    icon: /icons/google.svg
-    link: https://deepmind.google/technologies/gemini/
-    description: >
-      Google's workhorse model — fast, cheap, and surprisingly capable. Handles
-      1M token contexts at a fraction of Pro's cost with optional thinking mode.
-    releaseDate: "2025-05"
-    contextWindow: 1000000
-    maxOutput: 65536
-    knowledgeCutoff: "2025-01"
-    inputPricePer1M: 0.15
-    outputPricePer1M: 0.60
-    consumerPlanName: "Gemini Free"
-    consumerPlanPricePerMonth: 0
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: true
-    video: true
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: true
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 4
-    reasoningCapability: 4
-    multilingualCapability: 5
-    safetyRating: 4
-    speedRating: 5
-    tags: [fast, affordable, long-context]
-    tier: standard
+    '
+  releaseDate: 2026-02
+  contextWindow: 1048576
+  maxOutput: 65536
+  knowledgeCutoff: 2025-01
+  inputPricePer1M: 1.25
+  outputPricePer1M: 10.0
+  consumerPlanName: Gemini Advanced
+  consumerPlanPricePerMonth: 19.99
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: true
+  video: true
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 5
+  safetyRating: 4
+  speedRating: 3
+  tags:
+  - flagship
+  - long-context
+  - coding
+  - multimodal
+  - agentic
+  tier: frontier
+- id: gemini-2-5-flash
+  name: Gemini 2.5 Flash
+  provider: Google
+  icon: /icons/google.svg
+  link: https://deepmind.google/technologies/gemini/
+  description: 'Google''s workhorse model — fast, cheap, and surprisingly capable.
+    Handles 1M token contexts at a fraction of Pro''s cost with optional thinking
+    mode.
 
-  - id: llama-3-3-70b
-    name: Llama 3.3 70B
-    provider: Meta
-    icon: /icons/meta.svg
-    link: https://llama.meta.com/
-    description: >
-      Meta's high-performance open-source model. Near frontier quality in a
-      70B package — fully free to download, self-host, and fine-tune.
-    releaseDate: "2024-12"
-    contextWindow: 128000
-    maxOutput: 8192
-    knowledgeCutoff: "2023-12"
-    inputPricePer1M: 0.23
-    outputPricePer1M: 0.85
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: true
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: true
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: false
-    codeCapability: 4
-    reasoningCapability: 3
-    multilingualCapability: 3
-    safetyRating: 3
-    speedRating: 4
-    tags: [open-source, self-hostable, fine-tuning]
-    tier: standard
+    '
+  releaseDate: 2025-05
+  contextWindow: 1048576
+  maxOutput: 65536
+  knowledgeCutoff: 2025-01
+  inputPricePer1M: 0.3
+  outputPricePer1M: 2.5
+  consumerPlanName: Gemini Free
+  consumerPlanPricePerMonth: 0
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: true
+  video: true
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: true
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 4
+  reasoningCapability: 4
+  multilingualCapability: 5
+  safetyRating: 4
+  speedRating: 5
+  tags:
+  - fast
+  - affordable
+  - long-context
+  tier: standard
+- id: llama-3-3-70b
+  name: Llama 3.3 70B
+  provider: Meta
+  icon: /icons/meta.svg
+  link: https://llama.meta.com/
+  description: 'Meta''s high-performance open-source model. Near frontier quality
+    in a 70B package — fully free to download, self-host, and fine-tune.
 
-  - id: llama-4-maverick
-    name: Llama 4 Maverick
-    provider: Meta
-    icon: /icons/meta.svg
-    link: https://llama.meta.com/
-    description: >
-      Meta's latest multimodal open model. A mixture-of-experts architecture
-      delivers frontier-class performance in an open, self-hostable package.
-    releaseDate: "2025-04"
-    contextWindow: 1000000
-    maxOutput: 8192
-    knowledgeCutoff: "2024-08"
-    inputPricePer1M: 0.19
-    outputPricePer1M: 0.85
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: true
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: true
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: false
-    codeCapability: 4
-    reasoningCapability: 4
-    multilingualCapability: 4
-    safetyRating: 3
-    speedRating: 4
-    tags: [open-source, multimodal, long-context, moe]
-    tier: frontier
+    '
+  releaseDate: 2024-12
+  contextWindow: 131072
+  maxOutput: 8192
+  knowledgeCutoff: 2023-12
+  inputPricePer1M: 0.1
+  outputPricePer1M: 0.32
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: true
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: true
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: false
+  codeCapability: 4
+  reasoningCapability: 3
+  multilingualCapability: 3
+  safetyRating: 3
+  speedRating: 4
+  tags:
+  - open-source
+  - self-hostable
+  - fine-tuning
+  tier: standard
+- id: llama-4-maverick
+  name: Llama 4 Maverick
+  provider: Meta
+  icon: /icons/meta.svg
+  link: https://llama.meta.com/
+  description: 'Meta''s latest multimodal open model. A mixture-of-experts architecture
+    delivers frontier-class performance in an open, self-hostable package.
 
-  - id: mistral-large-2
-    name: Mistral Large 2
-    provider: Mistral AI
-    icon: /icons/mistral.svg
-    link: https://mistral.ai/
-    description: >
-      Mistral's flagship model with strong multilingual and coding abilities.
-      Available under a permissive license and deployable on-premise.
-    releaseDate: "2024-07"
-    contextWindow: 128000
-    maxOutput: 8192
-    knowledgeCutoff: "2024-04"
-    inputPricePer1M: 2.00
-    outputPricePer1M: 6.00
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: false
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: true
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: false
-    codeCapability: 4
-    reasoningCapability: 4
-    multilingualCapability: 5
-    safetyRating: 3
-    speedRating: 4
-    tags: [multilingual, on-premise, coding]
-    tier: standard
+    '
+  releaseDate: 2025-04
+  contextWindow: 1048576
+  maxOutput: 8192
+  knowledgeCutoff: 2024-08
+  inputPricePer1M: 0.15
+  outputPricePer1M: 0.6
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: true
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: true
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: false
+  codeCapability: 4
+  reasoningCapability: 4
+  multilingualCapability: 4
+  safetyRating: 3
+  speedRating: 4
+  tags:
+  - open-source
+  - multimodal
+  - long-context
+  - moe
+  tier: frontier
+- id: mistral-large-2
+  name: Mistral Large 2
+  provider: Mistral AI
+  icon: /icons/mistral.svg
+  link: https://mistral.ai/
+  description: 'Mistral''s flagship model with strong multilingual and coding abilities.
+    Available under a permissive license and deployable on-premise.
 
-  - id: deepseek-v3
-    name: DeepSeek V3
-    provider: DeepSeek
-    icon: /icons/deepseek.svg
-    link: https://deepseek.com/
-    description: >
-      Chinese lab DeepSeek's impressive open-source flagship. Competitive with
-      top-tier models at a dramatically lower inference cost.
-    releaseDate: "2024-12"
-    contextWindow: 64000
-    maxOutput: 8192
-    knowledgeCutoff: "2024-07"
-    inputPricePer1M: 0.27
-    outputPricePer1M: 1.10
-    consumerPlanName: "DeepSeek Chat"
-    consumerPlanPricePerMonth: 0
-    openSource: true
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: true
-    extendedThinking: false
-    codeCapability: 5
-    reasoningCapability: 4
-    multilingualCapability: 3
-    safetyRating: 2
-    speedRating: 4
-    tags: [open-source, cost-effective, coding]
-    tier: frontier
+    '
+  releaseDate: 2024-07
+  contextWindow: 128000
+  maxOutput: 8192
+  knowledgeCutoff: 2024-04
+  inputPricePer1M: 2.0
+  outputPricePer1M: 6.0
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: false
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: true
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: false
+  codeCapability: 4
+  reasoningCapability: 4
+  multilingualCapability: 5
+  safetyRating: 3
+  speedRating: 4
+  tags:
+  - multilingual
+  - on-premise
+  - coding
+  tier: standard
+- id: deepseek-v3
+  name: DeepSeek V3
+  provider: DeepSeek
+  icon: /icons/deepseek.svg
+  link: https://deepseek.com/
+  description: 'Chinese lab DeepSeek''s impressive open-source flagship. Competitive
+    with top-tier models at a dramatically lower inference cost.
 
-  - id: deepseek-r1
-    name: DeepSeek R1
-    provider: DeepSeek
-    icon: /icons/deepseek.svg
-    link: https://deepseek.com/
-    description: >
-      DeepSeek's open-source reasoning model. Matches o1-level math and coding
-      with full transparency — the thinking chain is visible in the output.
-    releaseDate: "2025-01"
-    contextWindow: 64000
-    maxOutput: 32768
-    knowledgeCutoff: "2024-07"
-    inputPricePer1M: 0.55
-    outputPricePer1M: 2.19
-    consumerPlanName: "DeepSeek Chat"
-    consumerPlanPricePerMonth: 0
-    openSource: true
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: false
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 3
-    safetyRating: 2
-    speedRating: 2
-    tags: [open-source, reasoning, math]
-    tier: frontier
+    '
+  releaseDate: 2024-12
+  contextWindow: 163840
+  maxOutput: 8192
+  knowledgeCutoff: 2024-07
+  inputPricePer1M: 0.2
+  outputPricePer1M: 0.77
+  consumerPlanName: DeepSeek Chat
+  consumerPlanPricePerMonth: 0
+  openSource: true
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: true
+  extendedThinking: false
+  codeCapability: 5
+  reasoningCapability: 4
+  multilingualCapability: 3
+  safetyRating: 2
+  speedRating: 4
+  tags:
+  - open-source
+  - cost-effective
+  - coding
+  tier: frontier
+- id: deepseek-r1
+  name: DeepSeek R1
+  provider: DeepSeek
+  icon: /icons/deepseek.svg
+  link: https://deepseek.com/
+  description: 'DeepSeek''s open-source reasoning model. Matches o1-level math and
+    coding with full transparency — the thinking chain is visible in the output.
 
-  - id: grok-3
-    name: Grok 3
-    provider: xAI
-    icon: /icons/xai.svg
-    link: https://x.ai/grok
-    description: >
-      xAI's latest flagship model trained on a massive compute cluster. Strong
-      math and science capabilities with real-time web search integration.
-    releaseDate: "2025-02"
-    contextWindow: 131072
-    maxOutput: 16000
-    knowledgeCutoff: "2024-11"
-    inputPricePer1M: 3.00
-    outputPricePer1M: 15.00
-    consumerPlanName: "SuperGrok"
-    consumerPlanPricePerMonth: 30
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: false
-    codeCapability: 4
-    reasoningCapability: 4
-    multilingualCapability: 3
-    safetyRating: 3
-    speedRating: 3
-    tags: [flagship, web-search, math, science]
-    tier: frontier
+    '
+  releaseDate: 2025-01
+  contextWindow: 64000
+  maxOutput: 32768
+  knowledgeCutoff: 2024-07
+  inputPricePer1M: 0.7
+  outputPricePer1M: 2.5
+  consumerPlanName: DeepSeek Chat
+  consumerPlanPricePerMonth: 0
+  openSource: true
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: false
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 3
+  safetyRating: 2
+  speedRating: 2
+  tags:
+  - open-source
+  - reasoning
+  - math
+  tier: frontier
+- id: grok-3
+  name: Grok 3
+  provider: xAI
+  icon: /icons/xai.svg
+  link: https://x.ai/grok
+  description: 'xAI''s latest flagship model trained on a massive compute cluster.
+    Strong math and science capabilities with real-time web search integration.
 
-  - id: deepseek-v4
-    name: DeepSeek V4
-    provider: DeepSeek
-    icon: /icons/deepseek.svg
-    link: https://deepseek.com/
-    description: >
-      DeepSeek's latest flagship MoE model with 1.6T parameters and 49B active.
-      Dramatically expands context to 1M tokens with optional thinking mode —
-      still at a fraction of the cost of Western labs.
-    releaseDate: "2026-03"
-    contextWindow: 1000000
-    maxOutput: 32768
-    knowledgeCutoff: "2025-06"
-    inputPricePer1M: 1.74
-    outputPricePer1M: 3.48
-    consumerPlanName: "DeepSeek Chat"
-    consumerPlanPricePerMonth: 0
-    openSource: true
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: true
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 3
-    safetyRating: 2
-    speedRating: 3
-    tags: [open-source, long-context, cost-effective, moe]
-    tier: frontier
+    '
+  releaseDate: 2025-02
+  contextWindow: 131072
+  maxOutput: 16000
+  knowledgeCutoff: 2024-11
+  inputPricePer1M: 3.0
+  outputPricePer1M: 15.0
+  consumerPlanName: SuperGrok
+  consumerPlanPricePerMonth: 30
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: false
+  codeCapability: 4
+  reasoningCapability: 4
+  multilingualCapability: 3
+  safetyRating: 3
+  speedRating: 3
+  tags:
+  - flagship
+  - web-search
+  - math
+  - science
+  tier: frontier
+- id: deepseek-v4
+  name: DeepSeek V4
+  provider: DeepSeek
+  icon: /icons/deepseek.svg
+  link: https://deepseek.com/
+  description: 'DeepSeek''s latest flagship MoE model with 1.6T parameters and 49B
+    active. Dramatically expands context to 1M tokens with optional thinking mode
+    — still at a fraction of the cost of Western labs.
 
-  - id: glm-5-1
-    name: GLM-5.1
-    provider: Z.ai
-    icon: /icons/zhipu.svg
-    link: https://z.ai/
-    description: >
-      Z.ai's frontier reasoning model built on a 744B MoE architecture.
-      Tops SWE-Bench Pro coding benchmarks and excels at agentic tasks
-      at a fraction of the price of comparable Western models.
-    releaseDate: "2026-04"
-    contextWindow: 200000
-    maxOutput: 65536
-    knowledgeCutoff: "2025-06"
-    inputPricePer1M: 1.05
-    outputPricePer1M: 3.50
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 4
-    safetyRating: 3
-    speedRating: 3
-    tags: [reasoning, coding, agentic, moe]
-    tier: frontier
+    '
+  releaseDate: 2026-03
+  contextWindow: 1048576
+  maxOutput: 32768
+  knowledgeCutoff: 2025-06
+  inputPricePer1M: 0.435
+  outputPricePer1M: 0.87
+  consumerPlanName: DeepSeek Chat
+  consumerPlanPricePerMonth: 0
+  openSource: true
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: true
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 3
+  safetyRating: 2
+  speedRating: 3
+  tags:
+  - open-source
+  - long-context
+  - cost-effective
+  - moe
+  tier: frontier
+- id: glm-5-1
+  name: GLM-5.1
+  provider: Z.ai
+  icon: /icons/zhipu.svg
+  link: https://z.ai/
+  description: 'Z.ai''s frontier reasoning model built on a 744B MoE architecture.
+    Tops SWE-Bench Pro coding benchmarks and excels at agentic tasks at a fraction
+    of the price of comparable Western models.
 
-  - id: mimo-v2-5-pro
-    name: MiMo-V2.5-Pro
-    provider: Xiaomi
-    icon: /icons/xiaomi.svg
-    link: https://mimo.xiaomi.com/mimo-v2-5-pro
-    description: >
-      Xiaomi's flagship agentic model with 1T parameters and full multimodal support.
-      Tops SWE-bench Pro and ClawEval at 8x lower output cost than Claude Opus.
-    releaseDate: "2026-04"
-    contextWindow: 1000000
-    maxOutput: 32768
-    knowledgeCutoff: "2025-06"
-    inputPricePer1M: 1.00
-    outputPricePer1M: 3.00
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: false
-    multimodal: true
-    vision: true
-    audio: true
-    video: true
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 5
-    multilingualCapability: 3
-    safetyRating: 3
-    speedRating: 3
-    tags: [agentic, multimodal, long-context, coding]
-    tier: frontier
+    '
+  releaseDate: 2026-04
+  contextWindow: 202752
+  maxOutput: 65536
+  knowledgeCutoff: 2025-06
+  inputPricePer1M: 1.05
+  outputPricePer1M: 3.5
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 4
+  safetyRating: 3
+  speedRating: 3
+  tags:
+  - reasoning
+  - coding
+  - agentic
+  - moe
+  tier: frontier
+- id: mimo-v2-5-pro
+  name: MiMo-V2.5-Pro
+  provider: Xiaomi
+  icon: /icons/xiaomi.svg
+  link: https://mimo.xiaomi.com/mimo-v2-5-pro
+  description: 'Xiaomi''s flagship agentic model with 1T parameters and full multimodal
+    support. Tops SWE-bench Pro and ClawEval at 8x lower output cost than Claude Opus.
 
-  - id: qwen3-6-plus
-    name: Qwen3.6 Plus
-    provider: Alibaba
-    icon: /icons/alibaba.svg
-    link: https://qwen.ai/
-    description: >
-      Alibaba's latest hybrid MoE model with always-on chain-of-thought reasoning
-      and a 1M-token context window. Competitive with frontier models on coding
-      and agentic benchmarks at a very low price point.
-    releaseDate: "2026-04"
-    contextWindow: 1000000
-    maxOutput: 65536
-    knowledgeCutoff: "2025-06"
-    inputPricePer1M: 0.33
-    outputPricePer1M: 1.95
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: true
-    multimodal: true
-    vision: true
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 5
-    reasoningCapability: 4
-    multilingualCapability: 5
-    safetyRating: 3
-    speedRating: 4
-    tags: [open-source, long-context, reasoning, cost-effective]
-    tier: frontier
+    '
+  releaseDate: 2026-04
+  contextWindow: 1000000
+  maxOutput: 32768
+  knowledgeCutoff: 2025-06
+  inputPricePer1M: 1.0
+  outputPricePer1M: 3.0
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: false
+  multimodal: true
+  vision: true
+  audio: true
+  video: true
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 5
+  multilingualCapability: 3
+  safetyRating: 3
+  speedRating: 3
+  tags:
+  - agentic
+  - multimodal
+  - long-context
+  - coding
+  tier: frontier
+- id: qwen3-6-plus
+  name: Qwen3.6 Plus
+  provider: Alibaba
+  icon: /icons/alibaba.svg
+  link: https://qwen.ai/
+  description: 'Alibaba''s latest hybrid MoE model with always-on chain-of-thought
+    reasoning and a 1M-token context window. Competitive with frontier models on coding
+    and agentic benchmarks at a very low price point.
 
-  - id: minimax-m2-7
-    name: MiniMax M2.7
-    provider: MiniMax
-    icon: /icons/minimax.svg
-    link: https://www.minimax.io/models/text/m27
-    description: >
-      MiniMax's compact 230B MoE reasoning model with only 10B active parameters.
-      Punches well above its weight on intelligence benchmarks with fast inference
-      and two API speed tiers.
-    releaseDate: "2026-03"
-    contextWindow: 200000
-    maxOutput: 40960
-    knowledgeCutoff: "2025-06"
-    inputPricePer1M: 0.30
-    outputPricePer1M: 1.20
-    consumerPlanName: null
-    consumerPlanPricePerMonth: null
-    openSource: false
-    multimodal: false
-    vision: false
-    audio: false
-    video: false
-    functionCalling: true
-    jsonMode: true
-    fineTuning: false
-    streaming: true
-    batchAPI: false
-    promptCaching: false
-    extendedThinking: true
-    codeCapability: 4
-    reasoningCapability: 4
-    multilingualCapability: 4
-    safetyRating: 3
-    speedRating: 4
-    tags: [reasoning, cost-effective, moe]
-    tier: standard
+    '
+  releaseDate: 2026-04
+  contextWindow: 1000000
+  maxOutput: 65536
+  knowledgeCutoff: 2025-06
+  inputPricePer1M: 0.26
+  outputPricePer1M: 0.78
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: true
+  multimodal: true
+  vision: true
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 5
+  reasoningCapability: 4
+  multilingualCapability: 5
+  safetyRating: 3
+  speedRating: 4
+  tags:
+  - open-source
+  - long-context
+  - reasoning
+  - cost-effective
+  tier: frontier
+- id: minimax-m2-7
+  name: MiniMax M2.7
+  provider: MiniMax
+  icon: /icons/minimax.svg
+  link: https://www.minimax.io/models/text/m27
+  description: 'MiniMax''s compact 230B MoE reasoning model with only 10B active parameters.
+    Punches well above its weight on intelligence benchmarks with fast inference and
+    two API speed tiers.
+
+    '
+  releaseDate: 2026-03
+  contextWindow: 200000
+  maxOutput: 40960
+  knowledgeCutoff: 2025-06
+  inputPricePer1M: 0.3
+  outputPricePer1M: 1.2
+  consumerPlanName: null
+  consumerPlanPricePerMonth: null
+  openSource: false
+  multimodal: false
+  vision: false
+  audio: false
+  video: false
+  functionCalling: true
+  jsonMode: true
+  fineTuning: false
+  streaming: true
+  batchAPI: false
+  promptCaching: false
+  extendedThinking: true
+  codeCapability: 4
+  reasoningCapability: 4
+  multilingualCapability: 4
+  safetyRating: 3
+  speedRating: 4
+  tags:
+  - reasoning
+  - cost-effective
+  - moe
+  tier: standard

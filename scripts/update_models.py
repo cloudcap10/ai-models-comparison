@@ -1,204 +1,138 @@
 #!/usr/bin/env python3
 """
-Autopilot: fetch provider docs and use Claude to suggest updates to models-data.yml.
-Writes an updated YAML in-place; the GitHub Actions workflow then diffs and PRs.
-"""
+Syncs pricing and context window for the tracked models from OpenRouter's
+free public API — no API key required.
 
-import os
-import sys
+What it updates automatically:  inputPricePer1M, outputPricePer1M, contextWindow
+What stays manual:              description, capabilities, icons, releaseDate,
+                                consumerPlan, vision, thinking, openSource
+
+Run locally:  python scripts/update_models.py
+CI:           triggered weekly by .github/workflows/update-models.yml
+"""
 import json
-import re
-import time
+import sys
+import urllib.request
 from pathlib import Path
 
-import anthropic
 import yaml
-import requests
 
-REPO_ROOT = Path(__file__).parent.parent
-MODELS_FILE = REPO_ROOT / "models-data.yml"
+MODELS_FILE = Path(__file__).parent.parent / "models-data.yml"
+OPENROUTER_API = "https://openrouter.ai/api/v1/models"
 
-# Provider documentation pages to fetch
-PROVIDER_PAGES = [
-    {
-        "provider": "Anthropic",
-        "url": "https://www.anthropic.com/pricing",
-        "note": "Claude model pricing",
-    },
-    {
-        "provider": "OpenAI",
-        "url": "https://openai.com/api/pricing/",
-        "note": "GPT model pricing",
-    },
-    {
-        "provider": "Google",
-        "url": "https://ai.google.dev/gemini-api/docs/models/gemini",
-        "note": "Gemini model specs",
-    },
-    {
-        "provider": "Meta",
-        "url": "https://llama.meta.com/",
-        "note": "Llama model releases",
-    },
-    {
-        "provider": "Mistral",
-        "url": "https://mistral.ai/products/",
-        "note": "Mistral model lineup",
-    },
-    {
-        "provider": "DeepSeek",
-        "url": "https://api-docs.deepseek.com/quick_start/pricing",
-        "note": "DeepSeek pricing",
-    },
-    {
-        "provider": "xAI",
-        "url": "https://x.ai/grok",
-        "note": "Grok model details",
-    },
-]
-
-HEADERS = {
-    "User-Agent": "PickModel-Autopilot/1.0 (+https://pickmodel.uk)",
-    "Accept": "text/html,application/xhtml+xml",
+# Maps our site model id  →  OpenRouter model id
+# Verify / update IDs at: https://openrouter.ai/models
+# (raw list: curl https://openrouter.ai/api/v1/models | python3 -m json.tool | grep '"id"')
+OPENROUTER_ID_MAP: dict[str, str | None] = {
+    "claude-opus-4-7":   "anthropic/claude-opus-4.7",
+    "claude-sonnet-4-6": "anthropic/claude-sonnet-4.6",
+    "claude-haiku-4-5":  "anthropic/claude-haiku-4.5",
+    "gpt-4o":            "openai/gpt-4o",
+    "gpt-4o-mini":       "openai/gpt-4o-mini",
+    "o3":                "openai/o3",
+    "o4-mini":           "openai/o4-mini",
+    "gemini-3-1-pro":    "google/gemini-2.5-pro-preview",
+    "gemini-2-5-flash":  "google/gemini-2.5-flash",
+    "llama-3-3-70b":     "meta-llama/llama-3.3-70b-instruct",
+    "llama-4-maverick":  "meta-llama/llama-4-maverick",
+    "mistral-large-2":   "mistralai/mistral-large",
+    "deepseek-v3":       "deepseek/deepseek-chat-v3-0324",
+    "deepseek-r1":       "deepseek/deepseek-r1",
+    "grok-3":            "x-ai/grok-3",
+    "deepseek-v4":       "deepseek/deepseek-v4-pro",
+    "glm-5-1":           "z-ai/glm-5.1",
+    "mimo-v2-5-pro":     None,  # not on OpenRouter — update manually
+    "qwen3-6-plus":      "qwen/qwen-plus",
+    "minimax-m2-7":      None,  # not on OpenRouter — update manually
 }
 
 
-def fetch_page(url: str, timeout: int = 15) -> str:
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=timeout)
-        r.raise_for_status()
-        # Strip HTML tags roughly — Claude can read the raw text
-        text = re.sub(r"<[^>]+>", " ", r.text)
-        text = re.sub(r"\s{3,}", "\n\n", text)
-        return text[:8000]  # Cap per page to keep context lean
-    except Exception as exc:
-        return f"[fetch failed: {exc}]"
-
-
-def load_current_yaml() -> tuple[dict, str]:
-    raw = MODELS_FILE.read_text()
-    return yaml.safe_load(raw), raw
-
-
-def build_provider_context(pages: list[dict]) -> str:
-    parts = []
-    for p in pages:
-        print(f"  Fetching {p['provider']}: {p['url']}", flush=True)
-        content = fetch_page(p["url"])
-        parts.append(f"=== {p['provider']} ({p['note']}) ===\n{content}\n")
-        time.sleep(0.5)  # Polite crawling
-    return "\n".join(parts)
-
-
-SYSTEM_PROMPT = """\
-You are a data curator for pickmodel.uk, a website that compares AI language models.
-Your job is to review the current models-data.yml and suggest accurate updates based on
-freshly fetched provider documentation.
-
-Rules:
-1. Only change values you are confident about from the provided documentation.
-2. Do NOT remove existing models — only update or add.
-3. When adding a new model, include ALL fields present in existing entries.
-4. Output ONLY valid YAML — the entire updated models-data.yml — with no markdown fences.
-5. If nothing needs updating, output the YAML unchanged.
-6. Be conservative: when in doubt, leave the existing value.
-7. Prices are per 1M tokens in USD.
-8. Dates use YYYY-MM format (e.g., "2025-04").
-9. contextWindow and maxOutput are integers (token counts).
-"""
-
-
-def ask_claude(client: anthropic.Anthropic, current_yaml: str, provider_context: str) -> str:
-    print("  Asking Claude to review changes...", flush=True)
-
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=8192,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": "Here is the current models-data.yml:\n\n```yaml\n"
-                        + current_yaml
-                        + "\n```",
-                        "cache_control": {"type": "ephemeral"},
-                    },
-                    {
-                        "type": "text",
-                        "text": "Here is fresh documentation from provider websites:\n\n"
-                        + provider_context,
-                        "cache_control": {"type": "ephemeral"},
-                    },
-                    {
-                        "type": "text",
-                        "text": (
-                            "Please output the complete updated models-data.yml. "
-                            "Include only YAML — no explanation, no markdown fences."
-                        ),
-                    },
-                ],
-            }
-        ],
-        betas=["prompt-caching-2024-07-31"],
+def fetch_openrouter() -> dict[str, dict]:
+    req = urllib.request.Request(
+        OPENROUTER_API,
+        headers={"User-Agent": "pickmodel-updater/1.0 (github.com/cloudcap10/pickmodel)"},
     )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = json.loads(resp.read())
+    return {m["id"]: m for m in data["data"]}
 
-    return response.content[0].text.strip()
 
+def sync_model(model: dict, or_entry: dict) -> bool:
+    """Update pricing and context from OpenRouter. Returns True if anything changed."""
+    changed = False
+    pricing = or_entry.get("pricing", {})
 
-def looks_like_valid_yaml(text: str) -> bool:
-    try:
-        data = yaml.safe_load(text)
-        return isinstance(data, dict) and "models" in data and isinstance(data["models"], list)
-    except yaml.YAMLError:
-        return False
+    # OpenRouter pricing is per-token as a string; we store per-1M tokens
+    for our_key, or_key in [("inputPricePer1M", "prompt"), ("outputPricePer1M", "completion")]:
+        raw = pricing.get(or_key)
+        if raw is None:
+            continue
+        new_val = round(float(raw) * 1_000_000, 4)
+        if model.get(our_key) != new_val:
+            model[our_key] = new_val
+            changed = True
+
+    ctx = or_entry.get("context_length")
+    if ctx is not None and model.get("contextWindow") != ctx:
+        model["contextWindow"] = ctx
+        changed = True
+
+    return changed
 
 
 def main() -> None:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        print("ERROR: ANTHROPIC_API_KEY environment variable not set.", file=sys.stderr)
+    print("Fetching OpenRouter model catalogue…")
+    try:
+        or_models = fetch_openrouter()
+    except Exception as exc:
+        print(f"ERROR: could not reach OpenRouter API: {exc}", file=sys.stderr)
         sys.exit(1)
 
-    print("PickModel autopilot starting...", flush=True)
+    print(f"  {len(or_models)} models available on OpenRouter\n")
 
-    current_data, current_yaml = load_current_yaml()
-    print(f"  Loaded {len(current_data['models'])} models from models-data.yml", flush=True)
+    raw = MODELS_FILE.read_text(encoding="utf-8")
+    data = yaml.safe_load(raw)
+    models: list[dict] = data["models"]
 
-    print("Fetching provider documentation...", flush=True)
-    provider_context = build_provider_context(PROVIDER_PAGES)
+    updated, skipped, missing = [], [], []
 
-    client = anthropic.Anthropic(api_key=api_key)
-    updated_yaml = ask_claude(client, current_yaml, provider_context)
+    for model in models:
+        mid = model["id"]
+        or_id = OPENROUTER_ID_MAP.get(mid)
 
-    # Strip accidental markdown fences if Claude wrapped it anyway
-    updated_yaml = re.sub(r"^```ya?ml\s*\n", "", updated_yaml, flags=re.MULTILINE)
-    updated_yaml = re.sub(r"\n```\s*$", "", updated_yaml)
+        if or_id is None:
+            print(f"  SKIP     {mid:30s}  (no OpenRouter mapping)")
+            skipped.append(mid)
+            continue
 
-    if not looks_like_valid_yaml(updated_yaml):
-        print("ERROR: Claude returned invalid YAML. Aborting to avoid corruption.", file=sys.stderr)
-        print("--- Claude output ---", file=sys.stderr)
-        print(updated_yaml[:500], file=sys.stderr)
-        sys.exit(1)
+        or_entry = or_models.get(or_id)
+        if or_entry is None:
+            print(f"  MISSING  {mid:30s}  → {or_id} not found on OpenRouter")
+            missing.append(mid)
+            continue
 
-    updated_data = yaml.safe_load(updated_yaml)
-    new_count = len(updated_data["models"])
-    old_count = len(current_data["models"])
+        if sync_model(model, or_entry):
+            print(f"  UPDATED  {mid:30s}  ← {or_id}")
+            updated.append(mid)
+        else:
+            print(f"  OK       {mid:30s}  (no change)")
 
-    if new_count < old_count:
-        print(
-            f"ERROR: Model count dropped {old_count} → {new_count}. Aborting to prevent data loss.",
-            file=sys.stderr,
+    print()
+    if updated:
+        MODELS_FILE.write_text(
+            yaml.dump(data, allow_unicode=True, sort_keys=False, default_flow_style=False),
+            encoding="utf-8",
         )
-        sys.exit(1)
+        print(f"Saved {len(updated)} update(s): {', '.join(updated)}")
+    else:
+        print("No changes — models-data.yml is already up to date.")
 
-    MODELS_FILE.write_text(updated_yaml + "\n")
-    print(
-        f"Done. {old_count} → {new_count} models. Updated models-data.yml written.",
-        flush=True,
-    )
+    if missing:
+        print(
+            f"\nWARNING: {len(missing)} model(s) not found on OpenRouter "
+            "(check OPENROUTER_ID_MAP at the top of this script):\n  "
+            + "\n  ".join(missing)
+        )
 
 
 if __name__ == "__main__":

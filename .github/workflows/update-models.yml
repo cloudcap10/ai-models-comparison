@@ -3,7 +3,7 @@ name: Autopilot — Update Model Data
 on:
   schedule:
     - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
-  workflow_dispatch:       # Allow manual trigger
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
 
 permissions:
   contents: write
@@ -20,11 +20,9 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install anthropic pyyaml requests
+        run: pip install pyyaml
 
-      - name: Run model update check
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Sync pricing from OpenRouter (free, no API key needed)
         run: python scripts/update_models.py
 
       - name: Check for changes
@@ -46,24 +44,26 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
           git add models-data.yml
-          git commit -m "chore: autopilot model data update $(date +%Y-%m-%d)"
+          git commit -m "chore: autopilot pricing sync $(date +%Y-%m-%d)"
           git push origin "$BRANCH"
           gh pr create \
-            --title "Autopilot: model data update $(date +%Y-%m-%d)" \
+            --title "Autopilot: pricing sync $(date +%Y-%m-%d)" \
             --body "$(cat <<'EOF'
-## Autopilot Model Update
+## Autopilot Pricing Sync
 
-This PR was generated automatically by the weekly model-update workflow.
+Automatically synced **inputPricePer1M**, **outputPricePer1M**, and **contextWindow**
+from [OpenRouter's public API](https://openrouter.ai/api/v1/models).
 
-Claude reviewed publicly available provider documentation and identified potential changes to pricing, context windows, or new models.
+No AI inference used — pure data from OpenRouter's catalogue.
 
-**Please review the diff carefully before merging** — Claude may have made mistakes.
+### What changed
+See the diff below. Only pricing and context window fields are touched;
+descriptions, capabilities, and icons are never modified by this workflow.
 
 ### Checklist
-- [ ] Pricing changes are accurate
-- [ ] New models are real and correctly described
-- [ ] No existing models were accidentally removed
-- [ ] All required YAML fields are present
+- [ ] Pricing changes look correct
+- [ ] Context window changes look correct
+- [ ] No unexpected fields were modified
 EOF
 )" \
             --label "autopilot" || true
