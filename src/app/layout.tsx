@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Geist } from 'next/font/google';
 import './globals.css';
 import Nav from '@/components/Nav';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -78,12 +82,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={inter.variable}>
+    <html lang="en-GB" className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="canonical" href={SITE_URL} />
       </head>
       <body>
+        <TooltipProvider>
         <Nav />
         <main>{children}</main>
         <footer
@@ -109,6 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </a>
           </p>
         </footer>
+        </TooltipProvider>
       </body>
     </html>
   );

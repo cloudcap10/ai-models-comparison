@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 export function formatContextWindow(tokens: number): string {
   if (tokens >= 1_000_000) return `${tokens / 1_000_000}M`;
   if (tokens >= 1_000) return `${tokens / 1_000}K`;
@@ -29,7 +36,7 @@ export function getProviderColor(provider: string): string {
 
 export function formatConsumerPlan(
   name: string | null,
-  price: number | null
+  price: number | null,
 ): { label: string; badge: string } | null {
   if (name === null || price === null) return null;
   const badge = price === 0 ? 'Free' : `$${price % 1 === 0 ? price : price.toFixed(2)}/mo`;

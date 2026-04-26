@@ -1,6 +1,13 @@
 'use client';
 
 import { Search, X } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export type SortKey =
   | 'name'
@@ -103,22 +110,24 @@ export default function FilterBar({ providers, filters, onChange }: FilterBarPro
           <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
             Sort by
           </span>
-          <select
+          <Select
             value={filters.sortKey}
-            onChange={(e) => update({ sortKey: e.target.value as SortKey })}
-            className="text-sm rounded-lg px-3 py-2 outline-none cursor-pointer"
-            style={{
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border)',
-              color: 'var(--text)',
-            }}
+            onValueChange={(v) => v && update({ sortKey: v as SortKey })}
           >
-            {SORT_OPTIONS.map((o) => (
-              <option key={o.key} value={o.key}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger
+              size="sm"
+              className="bg-[var(--bg-surface)] border-[var(--border)] text-[var(--text)] hover:bg-[var(--bg-card-hover)] min-w-[100px]"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SORT_OPTIONS.map((o) => (
+                <SelectItem key={o.key} value={o.key}>
+                  {o.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <button
             onClick={() => update({ sortDir: filters.sortDir === 'asc' ? 'desc' : 'asc' })}
             className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-medium transition-colors"
