@@ -1,9 +1,9 @@
-name: Autopilot — Update Model Data
+name: Autopilot - Update Model Data
 
 on:
   schedule:
-    - cron: '0 8 * * 1'  # Every Monday at 08:00 UTC
-  workflow_dispatch:       # Allow manual trigger from GitHub UI
+    - cron: '0 8 * * 1'  # Every Monday 08:00 UTC
+  workflow_dispatch:       # Manual trigger from GitHub UI
 
 permissions:
   contents: write
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Sync pricing from OpenRouter (free, no API key needed)
+      - name: Sync pricing from OpenRouter
         run: python scripts/update_models.py
 
       - name: Check for changes
@@ -48,22 +48,5 @@ jobs:
           git push origin "$BRANCH"
           gh pr create \
             --title "Autopilot: pricing sync $(date +%Y-%m-%d)" \
-            --body "$(cat <<'EOF'
-## Autopilot Pricing Sync
-
-Automatically synced **inputPricePer1M**, **outputPricePer1M**, and **contextWindow**
-from [OpenRouter's public API](https://openrouter.ai/api/v1/models).
-
-No AI inference used — pure data from OpenRouter's catalogue.
-
-### What changed
-See the diff below. Only pricing and context window fields are touched;
-descriptions, capabilities, and icons are never modified by this workflow.
-
-### Checklist
-- [ ] Pricing changes look correct
-- [ ] Context window changes look correct
-- [ ] No unexpected fields were modified
-EOF
-)" \
+            --body "Synced inputPricePer1M, outputPricePer1M, and contextWindow from OpenRouter API. Please review the diff before merging." \
             --label "autopilot" || true
