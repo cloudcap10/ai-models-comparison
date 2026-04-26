@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useId } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { AIModel } from '@/types/model';
 import { getProviderColor } from '@/lib/utils';
-import { Slider } from '@/components/ui/slider';
 
 interface Props {
   models: AIModel[];
@@ -88,12 +87,13 @@ interface SliderRowProps {
 }
 
 function SliderRow({ label, hint, value, min, max, step, display, onChange }: SliderRowProps) {
+  const id = useId();
   return (
     <div>
-      <div className="flex items-baseline justify-between mb-3">
-        <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
+      <div className="flex items-baseline justify-between mb-2">
+        <label htmlFor={id} className="text-sm font-medium" style={{ color: 'var(--text)' }}>
           {label}
-        </span>
+        </label>
         <div className="flex items-baseline gap-2">
           <span className="text-base font-bold" style={{ color: 'var(--accent)' }}>
             {display}
@@ -103,14 +103,15 @@ function SliderRow({ label, hint, value, min, max, step, display, onChange }: Sl
           </span>
         </div>
       </div>
-      <Slider
+      <input
+        id={id}
+        type="range"
         min={min}
         max={max}
         step={step}
-        value={[value]}
-        onValueChange={(vals) => onChange((vals as number[])[0])}
-        aria-label={label}
-        className="[&_[data-slot=slider-track]]:bg-[var(--border)] [&_[data-slot=slider-track]]:h-1.5 [&_[data-slot=slider-range]]:bg-[var(--accent)] [&_[data-slot=slider-thumb]]:border-[var(--accent-dim)] [&_[data-slot=slider-thumb]]:bg-[var(--accent)] [&_[data-slot=slider-thumb]]:size-4"
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-full"
       />
     </div>
   );
