@@ -50,7 +50,7 @@ export default function Hero({ modelCount, providerCount }: HeroProps) {
           }}
         >
           <Sparkles size={14} style={{ color: 'var(--accent)' }} />
-          <span>Community-maintained · Updated regularly</span>
+          <span>Community-maintained · Updated April 2026</span>
         </motion.div>
 
         <motion.div

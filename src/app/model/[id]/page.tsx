@@ -12,6 +12,7 @@ import {
   Calendar,
 } from 'lucide-react';
 import { loadModels, getModelById } from '@/lib/data';
+import RelatedModels from '@/components/RelatedModels';
 import { formatContextWindow, formatPrice, getProviderColor, formatConsumerPlan, isNewModel } from '@/lib/utils';
 
 const SITE_URL = 'https://pickmodel.uk';
@@ -208,6 +209,7 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
   const model = getModelById(id);
   if (!model) notFound();
 
+  const allModels = loadModels();
   const providerColor = getProviderColor(model.provider);
   const tierStyle = TIER_STYLES[model.tier] ?? TIER_STYLES.standard;
   const isNew = isNewModel(model.releaseDate);
@@ -252,6 +254,14 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <div className="max-w-5xl mx-auto px-4 py-10">
+        {/* Breadcrumb nav — mirrors BreadcrumbList JSON-LD */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs mb-6" style={{ color: 'var(--text-faint)' }}>
+          <Link href="/" style={{ color: 'var(--text-muted)' }}>PickModel</Link>
+          <span>/</span>
+          <Link href="/" style={{ color: 'var(--text-muted)' }}>Compare Models</Link>
+          <span>/</span>
+          <span style={{ color: 'var(--text)' }}>{model.name}</span>
+        </nav>
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm mb-8 transition-colors"
@@ -480,6 +490,8 @@ export default async function ModelPage({ params }: { params: Promise<{ id: stri
             </div>
           </Section>
         </div>
+
+        <RelatedModels current={model} all={allModels} />
       </div>
     </>
   );

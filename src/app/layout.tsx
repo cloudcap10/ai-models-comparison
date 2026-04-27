@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     'AI model comparison',
     'LLM comparison',
     'compare LLMs',
-    'best AI model 2025',
+    'best AI model 2026',
     'LLM pricing',
     'AI model benchmark',
     'AI API cost calculator',
@@ -111,6 +111,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p>
             Data is community-maintained. Prices and specs may change — always verify with official
             provider documentation.
+          </p>
+          <p className="mt-1" style={{ color: 'var(--text-faint)' }}>
+            Last updated: <time dateTime="2026-04-27">April 2026</time>
           </p>
           <p className="mt-2">
             MIT License ·{' '}

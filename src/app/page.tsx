@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { loadModels } from '@/lib/data';
 import Hero from '@/components/Hero';
 import ModelsSection from '@/components/ModelsSection';
+import FaqSection from '@/components/FaqSection';
+import { FAQ_ITEMS } from '@/lib/faq';
 
 const SITE_URL = 'https://pickmodel.uk';
 
@@ -53,6 +55,16 @@ export default function Home() {
     })),
   };
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
+
   return (
     <>
       <script
@@ -63,8 +75,13 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Hero modelCount={models.length} providerCount={providerCount} />
       <ModelsSection models={models} />
+      <FaqSection />
     </>
   );
 }
