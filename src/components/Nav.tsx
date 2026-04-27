@@ -13,7 +13,7 @@ export default function Nav() {
         </Link>
         <div className="flex items-center gap-5">
           <Link
-            href="#table"
+            href="/#models"
             className="text-sm transition-colors"
             style={{ color: 'var(--text-muted)' }}
             onMouseEnter={(e) => {
