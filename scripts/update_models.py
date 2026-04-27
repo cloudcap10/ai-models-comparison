@@ -11,6 +11,7 @@ Run locally:  python scripts/update_models.py
 CI:           triggered weekly by .github/workflows/update-models.yml
 """
 import json
+import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -19,6 +20,18 @@ import yaml
 
 MODELS_FILE = Path(__file__).parent.parent / "models-data.yml"
 OPENROUTER_API = "https://openrouter.ai/api/v1/models"
+
+# Providers whose new models we want to be alerted about
+TRACKED_PREFIXES = (
+    "anthropic/",
+    "openai/",
+    "google/",
+    "meta-llama/",
+    "mistralai/",
+    "deepseek/",
+    "x-ai/",
+    "qwen/",
+)
 
 # Maps our site model id  →  OpenRouter model id
 # Verify / update IDs at: https://openrouter.ai/models
@@ -80,6 +93,71 @@ def sync_model(model: dict, or_entry: dict) -> bool:
     return changed
 
 
+def detect_new_models(or_models: dict[str, dict], tracked_or_ids: set[str]) -> list[dict]:
+    """Return OpenRouter models from tracked providers that we don't have yet.
+
+    Filters out variant/instruct/free suffixes to reduce noise — we only surface
+    base model IDs (no ':free', ':extended', '-instruct', '-preview' suffixes that
+    are just access-tier aliases of an existing model).
+    """
+    noise_suffixes = (":free", ":extended", ":nitro", ":floor", "-instruct", "-preview", "-latest")
+    candidates = []
+    for or_id, entry in or_models.items():
+        if not any(or_id.startswith(p) for p in TRACKED_PREFIXES):
+            continue
+        if or_id in tracked_or_ids:
+            continue
+        if any(or_id.endswith(s) for s in noise_suffixes):
+            continue
+        candidates.append({
+            "id": or_id,
+            "name": entry.get("name", or_id),
+            "context": entry.get("context_length"),
+            "input_price": round(float(entry.get("pricing", {}).get("prompt", 0) or 0) * 1_000_000, 4),
+            "output_price": round(float(entry.get("pricing", {}).get("completion", 0) or 0) * 1_000_000, 4),
+        })
+    return sorted(candidates, key=lambda x: x["id"])
+
+
+def write_github_summary(updated: list, missing: list, new_models: list) -> None:
+    """Write a Markdown summary to GITHUB_STEP_SUMMARY if running in CI."""
+    summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not summary_file:
+        return
+
+    lines = ["## Autopilot model sync\n"]
+
+    if updated:
+        lines.append(f"### Updated ({len(updated)})\n")
+        for mid in updated:
+            lines.append(f"- `{mid}`")
+        lines.append("")
+    else:
+        lines.append("**No pricing/context changes detected.**\n")
+
+    if missing:
+        lines.append(f"### ⚠️ Mapping broken ({len(missing)})\n")
+        lines.append("These models are in `models-data.yml` but their OpenRouter ID was not found.\nCheck `OPENROUTER_ID_MAP` in `scripts/update_models.py`.\n")
+        for mid in missing:
+            lines.append(f"- `{mid}`")
+        lines.append("")
+
+    if new_models:
+        lines.append(f"### 🆕 New models detected on OpenRouter ({len(new_models)})\n")
+        lines.append("These models from tracked providers are **not yet in** `models-data.yml`.\nReview and add any that are relevant.\n")
+        lines.append("| OpenRouter ID | Name | Context | Input $/1M | Output $/1M |")
+        lines.append("|---|---|---|---|---|")
+        for m in new_models:
+            ctx = f"{m['context']:,}" if m['context'] else "—"
+            lines.append(f"| `{m['id']}` | {m['name']} | {ctx} | ${m['input_price']} | ${m['output_price']} |")
+        lines.append("")
+    else:
+        lines.append("**No new untracked models detected.**\n")
+
+    with open(summary_file, "a") as f:
+        f.write("\n".join(lines))
+
+
 def main() -> None:
     print("Fetching OpenRouter model catalogue…")
     try:
@@ -95,6 +173,7 @@ def main() -> None:
     models: list[dict] = data["models"]
 
     updated, skipped, missing = [], [], []
+    tracked_or_ids: set[str] = set()
 
     for model in models:
         mid = model["id"]
@@ -105,6 +184,7 @@ def main() -> None:
             skipped.append(mid)
             continue
 
+        tracked_or_ids.add(or_id)
         or_entry = or_models.get(or_id)
         if or_entry is None:
             print(f"  MISSING  {mid:30s}  → {or_id} not found on OpenRouter")
@@ -133,6 +213,18 @@ def main() -> None:
             "(check OPENROUTER_ID_MAP at the top of this script):\n  "
             + "\n  ".join(missing)
         )
+
+    # Detect new models from tracked providers not yet in our list
+    new_models = detect_new_models(or_models, tracked_or_ids)
+    if new_models:
+        print(f"\n🆕 {len(new_models)} new model(s) detected on OpenRouter (not yet tracked):")
+        for m in new_models:
+            ctx = f"{m['context']:,}" if m['context'] else "—"
+            print(f"  {m['id']:50s}  ctx={ctx}  ${m['input_price']}/1M in")
+    else:
+        print("\nNo new untracked models detected.")
+
+    write_github_summary(updated, missing, new_models)
 
 
 if __name__ == "__main__":

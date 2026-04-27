@@ -48,5 +48,13 @@ jobs:
           git push origin "$BRANCH"
           gh pr create \
             --title "Autopilot: pricing sync $(date +%Y-%m-%d)" \
-            --body "Synced inputPricePer1M, outputPricePer1M, and contextWindow from OpenRouter API. Please review the diff before merging." \
+            --body "Synced \`inputPricePer1M\`, \`outputPricePer1M\`, and \`contextWindow\` from OpenRouter API.
+
+See the **Job Summary** tab for a full breakdown and any newly detected models from tracked providers that may need adding.
+
+Please review the diff before merging." \
             --label "autopilot" || true
+
+      - name: Always report new model detections (even if no price changes)
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "No data changes this week — check Job Summary for new model detections."
