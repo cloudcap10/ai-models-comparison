@@ -46,13 +46,10 @@ jobs:
           git add models-data.yml
           git commit -m "chore: autopilot pricing sync $(date +%Y-%m-%d)"
           git push origin "$BRANCH"
+          printf 'Synced `inputPricePer1M`, `outputPricePer1M`, and `contextWindow` from OpenRouter API.\n\nSee the **Job Summary** tab for a full breakdown and any newly detected models from tracked providers that may need adding.\n\nPlease review the diff before merging.' > /tmp/pr-body.md
           gh pr create \
             --title "Autopilot: pricing sync $(date +%Y-%m-%d)" \
-            --body "Synced \`inputPricePer1M\`, \`outputPricePer1M\`, and \`contextWindow\` from OpenRouter API.
-
-See the **Job Summary** tab for a full breakdown and any newly detected models from tracked providers that may need adding.
-
-Please review the diff before merging." \
+            --body-file /tmp/pr-body.md \
             --label "autopilot" || true
 
       - name: Always report new model detections (even if no price changes)
